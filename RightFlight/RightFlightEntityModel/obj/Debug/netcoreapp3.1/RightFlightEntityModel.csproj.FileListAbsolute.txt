@@ -1,0 +1,12 @@
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\bin\Debug\netcoreapp3.1\RightFlightEntityModel.deps.json
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\bin\Debug\netcoreapp3.1\RightFlightEntityModel.dll
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\obj\Debug\netcoreapp3.1\RightFlightEntityModel.csprojAssemblyReference.cache
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\obj\Debug\netcoreapp3.1\RightFlightEntityModel.AssemblyInfoInputs.cache
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\obj\Debug\netcoreapp3.1\RightFlightEntityModel.AssemblyInfo.cs
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\bin\Debug\netcoreapp3.1\RightFlightEntityModel.runtimeconfig.json
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\bin\Debug\netcoreapp3.1\RightFlightEntityModel.runtimeconfig.dev.json
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\obj\Debug\netcoreapp3.1\RightFlightEntityModel.genruntimeconfig.cache
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\bin\Debug\netcoreapp3.1\RightFlightEntityModel.pdb
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\obj\Debug\netcoreapp3.1\RightFlightEntityModel.csproj.CoreCompileInputs.cache
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\obj\Debug\netcoreapp3.1\RightFlightEntityModel.dll
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightEntityModel\obj\Debug\netcoreapp3.1\RightFlightEntityModel.pdb

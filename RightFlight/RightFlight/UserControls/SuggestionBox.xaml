@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="RightFlight.SuggestionBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RightFlight"
+             mc:Ignorable="d"
+             x:Name="Root"
+             Loaded="RootLoaded"
+             d:DesignHeight="250" d:DesignWidth="250">
+    <Grid>
+
+        <StackPanel>
+            <TextBox x:Name="EntryBox" FontSize="{Binding ElementName=Root, Path=FontSize}"
+                     Text="{Binding ElementName=Root, Path=EntryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     TextChanged="EntryBoxTextChanged"
+                     PreviewKeyDown="EntryBoxPreviewKeyDown"/>
+
+            <Popup x:Name="SuggestionPopup" Placement="Bottom">
+
+                <ListBox x:Name="SuggestionListBox" Width="{Binding ElementName=EntryBox, Path=ActualWidth}"
+                         ItemsSource="{Binding ElementName=Root, Path=ItemsSource}"
+                         SelectedItem="{Binding ElementName=Root, Path=SelectedItem, Mode=TwoWay}"
+                         SelectionChanged="SuggestionBoxSelectionChanged">
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="{Binding .}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+            </Popup>
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>
+
