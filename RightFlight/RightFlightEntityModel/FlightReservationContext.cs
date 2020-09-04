@@ -64,6 +64,8 @@ namespace RightFlightEntityModel
 
                 entity.Property(e => e.AircraftRouteId).HasColumnName("aircraft_route_id");
 
+                entity.Property(e => e.FlightDuration).HasColumnName("flight_duration");
+
                 entity.Property(e => e.IcaoTypeCode)
                     .IsRequired()
                     .HasColumnName("icao_type_code")
@@ -254,8 +256,6 @@ namespace RightFlightEntityModel
                 entity.Property(e => e.FlightId).HasColumnName("flight_id");
 
                 entity.Property(e => e.AircraftRouteId).HasColumnName("aircraft_route_id");
-
-                entity.Property(e => e.EstimatedDuration).HasColumnName("estimated_duration");
 
                 entity.Property(e => e.FlightNumber)
                     .IsRequired()

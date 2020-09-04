@@ -6,7 +6,7 @@ C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightBusinessLayer\bin
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightBusinessLayer\obj\Debug\netcoreapp3.1\RightFlightBusinessLayer.csprojAssemblyReference.cache
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightBusinessLayer\obj\Debug\netcoreapp3.1\RightFlightBusinessLayer.AssemblyInfoInputs.cache
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightBusinessLayer\obj\Debug\netcoreapp3.1\RightFlightBusinessLayer.AssemblyInfo.cs
-C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightBusinessLayer\obj\Debug\netcoreapp3.1\RightFlightBusinessLayer.csproj.CoreCompileInputs.cache
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightBusinessLayer\obj\Debug\netcoreapp3.1\RightFlightBusinessLayer.csproj.CopyComplete
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightBusinessLayer\obj\Debug\netcoreapp3.1\RightFlightBusinessLayer.dll
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightBusinessLayer\obj\Debug\netcoreapp3.1\RightFlightBusinessLayer.pdb
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlightBusinessLayer\obj\Debug\netcoreapp3.1\RightFlightBusinessLayer.csproj.CoreCompileInputs.cache

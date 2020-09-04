@@ -63,7 +63,6 @@ C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\bin\Debug\netcor
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\RightFlight.csproj.CopyComplete
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\UserControls\AirportSuggestionBox.g.cs
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\UserControls\AirportSuggestionBox.baml
-C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\UserControls\AircraftDurationItemsBox.g.cs
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\UserControls\SuggestionBox.g.cs
-C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\UserControls\AircraftDurationItemsBox.baml
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\UserControls\SuggestionBox.baml
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\App.baml

@@ -14,7 +14,6 @@ namespace RightFlightEntityModel
         public int AircraftRouteId { get; set; }
         public string FlightNumber { get; set; }
         public DateTime ScheduledDeparture { get; set; }
-        public int EstimatedDuration { get; set; }
 
         public virtual AircraftRoute AircraftRoute { get; set; }
         public virtual ICollection<Booking> Booking { get; set; }

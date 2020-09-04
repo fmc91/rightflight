@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1000"
       Title="AddRoutePage"
-      Background="White">
+      Background="{StaticResource AircraftWingBrush}">
 
     <Page.DataContext>
         <local:AddRouteViewModel/>
@@ -16,6 +16,7 @@
     <Page.Resources>
 
         <local:IntConverter x:Key="IntConverter"/>
+        <local:FloatConverter x:Key="FloatConverter"/>
 
         <Style x:Key="Header" TargetType="TextBlock">
             <Setter Property="FontSize" Value="24"/>
@@ -28,6 +29,13 @@
             <Setter Property="Margin" Value="2 2 2 4"/>
         </Style>
 
+        <Style x:Key="TextBoxLeftLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="2 2 4 2"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
         <Style x:Key="MiscTextBlock" TargetType="TextBlock">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Margin" Value="2"/>
@@ -37,14 +45,113 @@
             <Setter Property="CornerRadius" Value="15"/>
             <Setter Property="Padding" Value="15"/>
             <Setter Property="Margin" Value="8"/>
-            <Setter Property="Background" Value="#d0d0d0"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.4,0" EndPoint="0.6,1">
+                        <GradientStop Color="#e0e2e9" Offset="0"/>
+                        <GradientStop Color="#cfd6da" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AddButtonStyle" TargetType="Button">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse x:Name="Circle" Width="26" Height="26" StrokeThickness="1">
+                                <Ellipse.Fill>
+                                    <LinearGradientBrush StartPoint="0.3,0.3" EndPoint="0.7,0.7">
+                                        <GradientStop Color="#6bcf53" Offset="0"/>
+                                        <GradientStop Color="#57ba3f" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Line X1="13" Y1="4" X2="13" Y2="22" Stroke="White" StrokeThickness="4"/>
+                            <Line X1="4" Y1="13" X2="22" Y2="13" Stroke="White" StrokeThickness="4"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Circle" Property="Stroke" Value="#93d1fa"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Circle" Property="Fill">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0.3,0.3" EndPoint="0.7,0.7">
+                                            <GradientStop Color="#80e667" Offset="0"/>
+                                            <GradientStop Color="#67d14d" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Margin" Value="5 0"/>
+        </Style>
+
+        <Style x:Key="RemoveButtonStyle" TargetType="Button">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse x:Name="Circle" Width="26" Height="26" StrokeThickness="1">
+                                <Ellipse.Fill>
+                                    <LinearGradientBrush StartPoint="0.3,0.3" EndPoint="0.7,0.7">
+                                        <GradientStop Color="#eb5454" Offset="0"/>
+                                        <GradientStop Color="#c23434" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Line X1="6" Y1="6" X2="20" Y2="20" Stroke="White" StrokeThickness="4"/>
+                            <Line X1="20" Y1="6" X2="6" Y2="20" Stroke="White" StrokeThickness="4"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Circle" Property="Stroke" Value="#93d1fa"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Circle" Property="Fill">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0.3,0.3" EndPoint="0.7,0.7">
+                                            <GradientStop Color="#f26f6f" Offset="0"/>
+                                            <GradientStop Color="#e05555" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Margin" Value="5 0"/>
+        </Style>
+
+        <Style x:Key="ConfirmButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Padding" Value="0 6"/>
+            <Setter Property="Margin" Value="8"/>
         </Style>
 
         <local:AirportConverter x:Key="AirportConverter"/>
 
     </Page.Resources>
 
-    <StackPanel MaxWidth="1000">
+    <StackPanel MaxWidth="1200">
 
         <Border Style="{StaticResource CardStyle}">
             <TextBlock Style="{StaticResource Header}" Text="Add Route"/>
@@ -52,7 +159,7 @@
 
         <Border Style="{StaticResource CardStyle}">
             <Grid>
-                
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="25"/>
@@ -67,26 +174,29 @@
 
                 <StackPanel Grid.Column="0" Grid.Row="0">
                     <TextBlock Style="{StaticResource TextBoxLabel}" Text="Airline:"/>
-                    <local:SuggestionBox EntryText="{Binding AirlineSearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
-                                                ItemsSource="{Binding AirlineSearchResult}"
-                                                SelectedItem="{Binding SelectedAirline, Mode=TwoWay}"
-                                                EntryTextChanged="AirlineTextChanged"/>
+                    <local:SuggestionBox Style="{StaticResource SuggestionBoxStyle}"
+                                         EntryText="{Binding AirlineSearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                         ItemsSource="{Binding AirlineSearchResult}"
+                                         SelectedItem="{Binding SelectedAirline, Mode=TwoWay}"
+                                         EntryTextChanged="AirlineTextChanged"/>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Column="0" Grid.Row="2">
                     <TextBlock Style="{StaticResource TextBoxLabel}" Text="Origin:"/>
-                    <local:AirportSuggestionBox EntryText="{Binding OriginSearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
-                                         ItemsSource="{Binding OriginSearchResult}"
-                                         SelectedItem="{Binding SelectedOrigin, Mode=TwoWay}"
-                                         EntryTextChanged="OriginTextChanged"/>
+                    <local:AirportSuggestionBox Style="{StaticResource AiportSuggestionBoxStyle}"
+                                                EntryText="{Binding OriginSearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                                ItemsSource="{Binding OriginSearchResult}"
+                                                SelectedItem="{Binding SelectedOrigin, Mode=TwoWay}"
+                                                EntryTextChanged="OriginTextChanged"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Grid.Row="2">
-                    <TextBlock Style="{StaticResource TextBoxLabel}" Text="Destination"/>
-                    <local:AirportSuggestionBox EntryText="{Binding DestinationSearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
-                                         ItemsSource="{Binding DestinationSearchResult}"
-                                         SelectedItem="{Binding SelectedDestination, Mode=TwoWay}"
-                                         EntryTextChanged="DestinationTextChanged"/>
+                    <TextBlock Style="{StaticResource TextBoxLabel}" Text="Destination:"/>
+                    <local:AirportSuggestionBox Style="{StaticResource AiportSuggestionBoxStyle}"
+                                                EntryText="{Binding DestinationSearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                                ItemsSource="{Binding DestinationSearchResult}"
+                                                SelectedItem="{Binding SelectedDestination, Mode=TwoWay}"
+                                                EntryTextChanged="DestinationTextChanged"/>
                 </StackPanel>
 
             </Grid>
@@ -94,8 +204,8 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
 
             <Border Style="{StaticResource CardStyle}">
@@ -103,16 +213,17 @@
 
                     <Grid Margin="0 4">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="4*"/>
                             <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="36"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Style="{StaticResource TextBoxLabel}" Grid.Column="0" Text="Aircraft:"/>
                         <TextBlock Style="{StaticResource TextBoxLabel}" Grid.Column="2" Text="Duration:"/>
                     </Grid>
 
-                    <ItemsControl ItemsSource="{Binding AircraftFlyingRoute}">
+                    <ItemsControl x:Name="FlightDurationItems" ItemsSource="{Binding FlightDurations}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel/>
@@ -123,19 +234,129 @@
                             <DataTemplate>
                                 <Grid Margin="0 4">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="4*"/>
                                         <ColumnDefinition Width="25"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="36"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Style="{StaticResource MiscTextBlock}" Grid.Column="0" Text="{Binding Aircraft}"/>
+                                    <TextBlock Style="{StaticResource MiscTextBlock}" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Aircraft}"/>
 
                                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 3 0" Text="{Binding DurationHours}"/>
-                                        <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 6 0" Text="hr"/>
-                                        <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 3 0" Text="{Binding DurationMinutes}"/>
-                                        <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 6 0" Text="min"/>
+                                        <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 3 0" VerticalAlignment="Center"
+                                                   Text="{Binding DurationHours}"/>
+                                        <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 6 0" VerticalAlignment="Center" Text="hr"/>
+                                        <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 3 0" VerticalAlignment="Center"
+                                                   Text="{Binding DurationMinutes}"/>
+                                        <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 6 0" VerticalAlignment="Center" Text="min"/>
+                                        
                                     </StackPanel>
+
+                                    <Button Style="{StaticResource RemoveButtonStyle}" Grid.Column="3"
+                                                Command="{Binding ElementName=FlightDurationItems, Path=DataContext.RemoveFlightDurationCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <Grid Margin="0 4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="36"/>
+                        </Grid.ColumnDefinitions>
+
+                        <local:SuggestionBox Style="{StaticResource SuggestionBoxStyle}" VerticalAlignment="Center"
+                                             Grid.Column="0" EntryText="{Binding AircraftSearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                             ItemsSource="{Binding AircraftSearchResult}" SelectedItem="{Binding SelectedAircraft, Mode=TwoWay}"
+                                             EntryTextChanged="AircraftTextChanged"/>
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <TextBox Style="{StaticResource SmallTextBoxStyle}" Width="35" VerticalAlignment="Center" Margin="0 0 6 0"
+                                     Text="{Binding DurationHours, Converter={StaticResource IntConverter}}"/>
+                            <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 8 0" VerticalAlignment="Center" Text="hr"/>
+                            <TextBox Style="{StaticResource SmallTextBoxStyle}" Width="35" Margin="0 0 6 0" VerticalAlignment="Center"
+                                     Text="{Binding DurationMinutes, Converter={StaticResource IntConverter}}"/>
+                            <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 8 0" VerticalAlignment="Center" Text="min"/>
+                        </StackPanel>
+
+                        <Button Style="{StaticResource AddButtonStyle}" Grid.Column="3" Margin="5 0" Content="Add"
+                                        Command="{Binding AddFlightDurationCommand}"/>
+
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource CardStyle}" Grid.Column="1">
+
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="36"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Style="{StaticResource TextBoxLabel}" Text="Travel Class:"/>
+
+                        <TextBlock Grid.Column="2" Style="{StaticResource TextBoxLabel}" Text="Adult Fare:"/>
+
+                        <TextBlock Grid.Column="4" Style="{StaticResource TextBoxLabel}" Text="Child Fare:"/>
+
+                        <TextBlock Grid.Column="6" Style="{StaticResource TextBoxLabel}" Text="Infant Fare:"/>
+
+                    </Grid>
+
+                    <ItemsControl x:Name="PricingSchemeItems" ItemsSource="{Binding ClassPricingSchemes}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="36"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Style="{StaticResource MiscTextBlock}" Grid.Column="0" VerticalAlignment="Center"
+                                               Text="{Binding TravelClassName}"/>
+                                    <DockPanel Grid.Column="2">
+                                        <TextBlock Style="{StaticResource TextBoxLeftLabel}" VerticalAlignment="Center" Text="£"/>
+                                        <TextBlock Style="{StaticResource MiscTextBlock}" VerticalAlignment="Center"
+                                                   Text="{Binding AdultFare, Converter={StaticResource FloatConverter}}"/>
+                                    </DockPanel>
+                                    <DockPanel Grid.Column="4">
+                                        <TextBlock Style="{StaticResource TextBoxLeftLabel}" VerticalAlignment="Center" Text="£"/>
+                                        <TextBlock Style="{StaticResource MiscTextBlock}" VerticalAlignment="Center"
+                                                   Text="{Binding ChildFare, Converter={StaticResource FloatConverter}}"/>
+                                    </DockPanel>
+                                    <DockPanel Grid.Column="6">
+                                        <TextBlock Style="{StaticResource TextBoxLeftLabel}" VerticalAlignment="Center" Text="£"/>
+                                        <TextBlock Style="{StaticResource MiscTextBlock}" VerticalAlignment="Center"
+                                                   Text="{Binding InfantFare, Converter={StaticResource FloatConverter}}"/>
+                                    </DockPanel>
+
+                                    <Button Style="{StaticResource RemoveButtonStyle}" Grid.Column="7"
+                                            Command="{Binding ElementName=PricingSchemeItems, Path=DataContext.RemovePricingSchemeCommand}"
+                                            CommandParameter="{Binding .}"/>
 
                                 </Grid>
                             </DataTemplate>
@@ -144,32 +365,34 @@
 
                     <Grid Margin="0 4">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="36"/>
                         </Grid.ColumnDefinitions>
 
-                        <local:SuggestionBox Grid.Column="0" EntryText="{Binding AircraftSearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
-                                             ItemsSource="{Binding AircraftSearchResult}" SelectedItem="{Binding SelectedAircraft, Mode=TwoWay}"
-                                             EntryTextChanged="AircraftTextChanged"/>
+                        <ComboBox Grid.Column="0" VerticalAlignment="Center" ItemsSource="{Binding TravelClasses}" SelectedItem="{Binding SelectedTravelClass}"/>
+                        <DockPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource TextBoxLeftLabel}" VerticalAlignment="Center" Text="£"/>
+                            <TextBox Style="{StaticResource MiscTextBoxStyle}" VerticalAlignment="Center"
+                                     Text="{Binding AdultFare, Converter={StaticResource FloatConverter}}"/>
+                        </DockPanel>
+                        <DockPanel Grid.Column="4">
+                            <TextBlock Style="{StaticResource TextBoxLeftLabel}" VerticalAlignment="Center" Text="£"/>
+                            <TextBox Style="{StaticResource MiscTextBoxStyle}" VerticalAlignment="Center"
+                                     Text="{Binding ChildFare, Converter={StaticResource FloatConverter}}"/>
+                        </DockPanel>
+                        <DockPanel Grid.Column="6">
+                            <TextBlock Style="{StaticResource TextBoxLeftLabel}" VerticalAlignment="Center" Text="£"/>
+                            <TextBox Style="{StaticResource MiscTextBoxStyle}" VerticalAlignment="Center"
+                                     Text="{Binding InfantFare, Converter={StaticResource FloatConverter}}"/>
+                        </DockPanel>
 
-                        <Grid Grid.Column="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                <TextBox Width="25" Margin="0 0 3 0" Text="{Binding DurationHours, Converter={StaticResource IntConverter}}"/>
-                                <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 6 0" Text="hr"/>
-                                <TextBox Width="25" Margin="0 0 3 0" Text="{Binding DurationMinutes, Converter={StaticResource IntConverter}}"/>
-                                <TextBlock Style="{StaticResource MiscTextBlock}" Margin="0 0 6 0" Text="min"/>
-                            </StackPanel>
-
-                            <Button Grid.Column="1" Margin="5 0" Content="Add"
-                                    Command="{Binding AddAircraftCommand}"/>
-
-                        </Grid>
+                        <Button Style="{StaticResource AddButtonStyle}" Grid.Column="7" Command="{Binding AddPricingSchemeCommand}"/>
 
                     </Grid>
 
@@ -177,6 +400,8 @@
             </Border>
 
         </Grid>
-        
+
+        <Button Style="{StaticResource ConfirmButtonStyle}" Content="Confirm" Command="{Binding ConfirmCommand}"/>
+
     </StackPanel>
 </Page>

@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace RightFlight
+namespace RightFlightBusinessLayer
 {
-    public class AircraftDuration
+    public class FlightDuration
     {
         public Aircraft Aircraft { get; set; }
 

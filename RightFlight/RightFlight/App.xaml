@@ -2,8 +2,163 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RightFlight"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <local:HalveConverter x:Key="Halve"/>
+
+        <Style TargetType="ScrollBar">
+
+            <Style.Resources>
+                <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">8</sys:Double>
+                <sys:Double x:Key="{x:Static SystemParameters.HorizontalScrollBarHeightKey}">8</sys:Double>
+            </Style.Resources>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+
+                        <Grid x:Name="GridRoot" Width="8">
+
+                            <Track x:Name="PART_Track" IsDirectionReversed="True" Focusable="False">
+
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb">
+                                        <Thumb.Template>
+                                            <ControlTemplate>
+                                                <Border Background="#d0d0d0" CornerRadius="5"/>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+
+                            </Track>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Thumb" Property="Tag" Value="Horizontal"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="RoundedTextBoxTemplate" TargetType="TextBoxBase">
+            <Border Background="White" CornerRadius="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Converter={StaticResource Halve}}">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=ActualHeight, Converter={StaticResource Halve}}"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=ActualHeight, Converter={StaticResource Halve}}"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden" x:Name="PART_ContentHost" VerticalAlignment="Center"
+                                  Margin="0 2"/>
+                </Grid>
+
+                <Border.Effect>
+                    <DropShadowEffect Color="#909090" Opacity="0.75" BlurRadius="5" ShadowDepth="2"/>
+                </Border.Effect>
+            </Border>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="SmallRoundedTextBoxTemplate" TargetType="TextBoxBase">
+            <Border Background="White" CornerRadius="6">
+
+                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden" x:Name="PART_ContentHost" Margin="6 2"/>
+
+                <Border.Effect>
+                    <DropShadowEffect Color="#909090" Opacity="0.75" BlurRadius="5" ShadowDepth="2"/>
+                </Border.Effect>
+            </Border>
+        </ControlTemplate>
+
+        <Style x:Key="AiportSuggestionBoxStyle" TargetType="local:AirportSuggestionBox">
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style x:Key="SuggestionBoxStyle" TargetType="local:SuggestionBox">
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style x:Key="MiscTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template" Value="{StaticResource RoundedTextBoxTemplate}"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style x:Key="SmallTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template" Value="{StaticResource SmallRoundedTextBoxTemplate}"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <ControlTemplate x:Key="RoundedButtonTemplate" TargetType="Button">
+            <Border Background="{TemplateBinding Background}" CornerRadius="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Converter={StaticResource Halve}}"
+                    BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=ActualHeight, Converter={StaticResource Halve}}"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=ActualHeight, Converter={StaticResource Halve}}"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ContentPresenter Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#4481db" Offset="0"/>
+                        <GradientStop Color="#245cad" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="White"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#6da3f2" Offset="0"/>
+                                <GradientStop Color="#3c78cf" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+
+            
+        </Style>
+
+        <ImageBrush x:Key="AircraftWingBrush" ImageSource="pack://application:,,,/Images/aircraft_wing.jpeg" Stretch="UniformToFill"/>
+
     </Application.Resources>
 </Application>

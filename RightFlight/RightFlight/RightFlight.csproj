@@ -7,8 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\aircraft_wing.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RightFlightBusinessLayer\RightFlightBusinessLayer.csproj" />
     <ProjectReference Include="..\RightFlightEntityModel\RightFlightEntityModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\aircraft_wing.jpeg" />
   </ItemGroup>
 
 </Project>

@@ -7,11 +7,11 @@
              mc:Ignorable="d"
              x:Name="Root"
              Loaded="RootLoaded"
-             d:DesignHeight="250" d:DesignWidth="250">
+             d:DesignHeight="28" d:DesignWidth="250">
     <Grid>
 
-        <StackPanel>
-            <TextBox x:Name="EntryBox" FontSize="{Binding ElementName=Root, Path=FontSize}"
+        <Grid>
+            <TextBox x:Name="EntryBox" Template="{StaticResource RoundedTextBoxTemplate}" FontSize="{Binding ElementName=Root, Path=FontSize}"
                      Text="{Binding ElementName=Root, Path=EntryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      TextChanged="EntryBoxTextChanged"
                      PreviewKeyDown="EntryBoxPreviewKeyDown"/>
@@ -33,7 +33,7 @@
                 </ListBox>
             </Popup>
 
-        </StackPanel>
+        </Grid>
 
     </Grid>
 </UserControl>

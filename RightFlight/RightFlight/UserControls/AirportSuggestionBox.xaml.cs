@@ -53,6 +53,7 @@ namespace RightFlight
 
             Window w = Window.GetWindow(this);
             w.LocationChanged += WindowLocationChanged;
+            w.SizeChanged += WindowSizeChanged;
         }
 
         private void SuggestionBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -104,6 +105,11 @@ namespace RightFlight
         }
 
         private void WindowLocationChanged(object sender, EventArgs e)
+        {
+            SuggestionPopup.IsOpen = false;
+        }
+
+        private void WindowSizeChanged(object sender, EventArgs e)
         {
             SuggestionPopup.IsOpen = false;
         }
