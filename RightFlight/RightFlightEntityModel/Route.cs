@@ -7,18 +7,18 @@ namespace RightFlightEntityModel
     {
         public Route()
         {
-            AircraftRoute = new HashSet<AircraftRoute>();
+            RouteAircraft = new HashSet<RouteAircraft>();
         }
 
         public int RouteId { get; set; }
         public string AirlineCode { get; set; }
-        public string OriginAirport { get; set; }
-        public string DestinationAirport { get; set; }
+        public string OriginAirportCode { get; set; }
+        public string DestinationAirportCode { get; set; }
         public string PricingScheme { get; set; }
 
-        public virtual Airline AirlineCodeNavigation { get; set; }
-        public virtual Airport DestinationAirportNavigation { get; set; }
-        public virtual Airport OriginAirportNavigation { get; set; }
-        public virtual ICollection<AircraftRoute> AircraftRoute { get; set; }
+        public virtual Airline Airline { get; set; }
+        public virtual Airport DestinationAirport { get; set; }
+        public virtual Airport OriginAirport { get; set; }
+        public virtual ICollection<RouteAircraft> RouteAircraft { get; set; }
     }
 }

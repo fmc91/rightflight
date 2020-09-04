@@ -6,17 +6,12 @@ namespace RightFlightEntityModel
 {
     public partial class FlightReservationContext : DbContext
     {
-        public FlightReservationContext()
-        {
-        }
+        public FlightReservationContext() { }
 
         public FlightReservationContext(DbContextOptions<FlightReservationContext> options)
-            : base(options)
-        {
-        }
+            : base(options) { }
 
         public virtual DbSet<Aircraft> Aircraft { get; set; }
-        public virtual DbSet<AircraftRoute> AircraftRoute { get; set; }
         public virtual DbSet<Airline> Airline { get; set; }
         public virtual DbSet<Airport> Airport { get; set; }
         public virtual DbSet<Booking> Booking { get; set; }
@@ -26,6 +21,7 @@ namespace RightFlightEntityModel
         public virtual DbSet<Nationality> Nationality { get; set; }
         public virtual DbSet<Passenger> Passenger { get; set; }
         public virtual DbSet<Route> Route { get; set; }
+        public virtual DbSet<RouteAircraft> RouteAircraft { get; set; }
         public virtual DbSet<TravelClass> TravelClass { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -56,35 +52,6 @@ namespace RightFlightEntityModel
                     .HasColumnName("model")
                     .HasMaxLength(50)
                     .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<AircraftRoute>(entity =>
-            {
-                entity.ToTable("aircraft_route");
-
-                entity.Property(e => e.AircraftRouteId).HasColumnName("aircraft_route_id");
-
-                entity.Property(e => e.FlightDuration).HasColumnName("flight_duration");
-
-                entity.Property(e => e.IcaoTypeCode)
-                    .IsRequired()
-                    .HasColumnName("icao_type_code")
-                    .HasMaxLength(4)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RouteId).HasColumnName("route_id");
-
-                entity.HasOne(d => d.IcaoTypeCodeNavigation)
-                    .WithMany(p => p.AircraftRoute)
-                    .HasForeignKey(d => d.IcaoTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__aircraft___icao___7B5B524B");
-
-                entity.HasOne(d => d.Route)
-                    .WithMany(p => p.AircraftRoute)
-                    .HasForeignKey(d => d.RouteId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__aircraft___route__7C4F7684");
             });
 
             modelBuilder.Entity<Airline>(entity =>
@@ -137,7 +104,7 @@ namespace RightFlightEntityModel
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.CityCodeNavigation)
+                entity.HasOne(d => d.City)
                     .WithMany(p => p.Airport)
                     .HasForeignKey(d => d.CityCode)
                     .HasConstraintName("FK__airport__city_co__73BA3083");
@@ -148,7 +115,7 @@ namespace RightFlightEntityModel
                 entity.ToTable("booking");
 
                 entity.HasIndex(e => e.BookingReference)
-                    .HasName("UQ__booking__BADA455981F6467E")
+                    .HasName("UQ__booking__BADA4559D62879D1")
                     .IsUnique();
 
                 entity.Property(e => e.BookingId).HasColumnName("booking_id");
@@ -181,13 +148,13 @@ namespace RightFlightEntityModel
                     .WithMany(p => p.Booking)
                     .HasForeignKey(d => d.FlightId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__booking__flight___02FC7413");
+                    .HasConstraintName("FK__booking__flight___22751F6C");
 
-                entity.HasOne(d => d.TravelClassCodeNavigation)
+                entity.HasOne(d => d.TravelClass)
                     .WithMany(p => p.Booking)
                     .HasForeignKey(d => d.TravelClassCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__booking__travel___03F0984C");
+                    .HasConstraintName("FK__booking__travel___236943A5");
             });
 
             modelBuilder.Entity<City>(entity =>
@@ -222,7 +189,7 @@ namespace RightFlightEntityModel
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.CountryCodeNavigation)
+                entity.HasOne(d => d.Country)
                     .WithMany(p => p.City)
                     .HasForeignKey(d => d.CountryCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -255,23 +222,23 @@ namespace RightFlightEntityModel
 
                 entity.Property(e => e.FlightId).HasColumnName("flight_id");
 
-                entity.Property(e => e.AircraftRouteId).HasColumnName("aircraft_route_id");
-
                 entity.Property(e => e.FlightNumber)
                     .IsRequired()
                     .HasColumnName("flight_number")
                     .HasMaxLength(8)
                     .IsUnicode(false);
 
+                entity.Property(e => e.RouteAircraftId).HasColumnName("route_aircraft_id");
+
                 entity.Property(e => e.ScheduledDeparture)
                     .HasColumnName("scheduled_departure")
                     .HasColumnType("datetime");
 
-                entity.HasOne(d => d.AircraftRoute)
+                entity.HasOne(d => d.RouteAircraft)
                     .WithMany(p => p.Flight)
-                    .HasForeignKey(d => d.AircraftRouteId)
+                    .HasForeignKey(d => d.RouteAircraftId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__flight__aircraft__7F2BE32F");
+                    .HasConstraintName("FK__flight__route_ai__1EA48E88");
             });
 
             modelBuilder.Entity<Nationality>(entity =>
@@ -341,13 +308,13 @@ namespace RightFlightEntityModel
                     .WithMany(p => p.Passenger)
                     .HasForeignKey(d => d.BookingId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__passenger__booki__07C12930");
+                    .HasConstraintName("FK__passenger__booki__2739D489");
 
                 entity.HasOne(d => d.Nationality)
                     .WithMany(p => p.Passenger)
                     .HasForeignKey(d => d.NationalityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__passenger__natio__08B54D69");
+                    .HasConstraintName("FK__passenger__natio__282DF8C2");
             });
 
             modelBuilder.Entity<Route>(entity =>
@@ -363,16 +330,16 @@ namespace RightFlightEntityModel
                     .IsUnicode(false)
                     .IsFixedLength();
 
-                entity.Property(e => e.DestinationAirport)
+                entity.Property(e => e.DestinationAirportCode)
                     .IsRequired()
-                    .HasColumnName("destination_airport")
+                    .HasColumnName("destination_airport_code")
                     .HasMaxLength(3)
                     .IsUnicode(false)
                     .IsFixedLength();
 
-                entity.Property(e => e.OriginAirport)
+                entity.Property(e => e.OriginAirportCode)
                     .IsRequired()
-                    .HasColumnName("origin_airport")
+                    .HasColumnName("origin_airport_code")
                     .HasMaxLength(3)
                     .IsUnicode(false)
                     .IsFixedLength();
@@ -383,23 +350,52 @@ namespace RightFlightEntityModel
                     .HasMaxLength(8000)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.AirlineCodeNavigation)
+                entity.HasOne(d => d.Airline)
                     .WithMany(p => p.Route)
                     .HasForeignKey(d => d.AirlineCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__route__airline_c__76969D2E");
+                    .HasConstraintName("FK__route__airline_c__160F4887");
 
-                entity.HasOne(d => d.DestinationAirportNavigation)
-                    .WithMany(p => p.RouteDestinationAirportNavigation)
-                    .HasForeignKey(d => d.DestinationAirport)
+                entity.HasOne(d => d.DestinationAirport)
+                    .WithMany(p => p.RouteDestinationAirportCodeNavigation)
+                    .HasForeignKey(d => d.DestinationAirportCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__route__destinati__787EE5A0");
+                    .HasConstraintName("FK__route__destinati__17F790F9");
 
-                entity.HasOne(d => d.OriginAirportNavigation)
-                    .WithMany(p => p.RouteOriginAirportNavigation)
-                    .HasForeignKey(d => d.OriginAirport)
+                entity.HasOne(d => d.OriginAirport)
+                    .WithMany(p => p.RouteOriginAirportCodeNavigation)
+                    .HasForeignKey(d => d.OriginAirportCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__route__origin_ai__778AC167");
+                    .HasConstraintName("FK__route__origin_ai__17036CC0");
+            });
+
+            modelBuilder.Entity<RouteAircraft>(entity =>
+            {
+                entity.ToTable("route_aircraft");
+
+                entity.Property(e => e.RouteAircraftId).HasColumnName("route_aircraft_id");
+
+                entity.Property(e => e.FlightDuration).HasColumnName("flight_duration");
+
+                entity.Property(e => e.IcaoTypeCode)
+                    .IsRequired()
+                    .HasColumnName("icao_type_code")
+                    .HasMaxLength(4)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RouteId).HasColumnName("route_id");
+
+                entity.HasOne(d => d.Aircraft)
+                    .WithMany(p => p.RouteAircraft)
+                    .HasForeignKey(d => d.IcaoTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__route_air__icao___1AD3FDA4");
+
+                entity.HasOne(d => d.Route)
+                    .WithMany(p => p.RouteAircraft)
+                    .HasForeignKey(d => d.RouteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__route_air__route__1BC821DD");
             });
 
             modelBuilder.Entity<TravelClass>(entity =>

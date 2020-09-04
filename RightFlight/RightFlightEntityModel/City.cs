@@ -15,7 +15,7 @@ namespace RightFlightEntityModel
         public string TimeZone { get; set; }
         public string CountryCode { get; set; }
 
-        public virtual Country CountryCodeNavigation { get; set; }
+        public virtual Country Country { get; set; }
         public virtual ICollection<Airport> Airport { get; set; }
     }
 }

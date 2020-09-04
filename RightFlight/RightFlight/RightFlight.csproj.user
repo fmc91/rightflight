@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="AddFlightPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="AddRoutePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -15,6 +18,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="AddFlightPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="AddRoutePage.xaml">
       <SubType>Designer</SubType>
     </Page>

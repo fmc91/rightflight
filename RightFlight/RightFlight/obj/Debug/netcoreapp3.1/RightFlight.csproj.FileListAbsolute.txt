@@ -66,3 +66,5 @@ C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcor
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\UserControls\SuggestionBox.g.cs
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\UserControls\SuggestionBox.baml
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\App.baml
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\AddFlightPage.g.cs
+C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\AddFlightPage.baml

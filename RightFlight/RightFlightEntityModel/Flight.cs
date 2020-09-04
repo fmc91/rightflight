@@ -11,11 +11,11 @@ namespace RightFlightEntityModel
         }
 
         public int FlightId { get; set; }
-        public int AircraftRouteId { get; set; }
+        public int RouteAircraftId { get; set; }
         public string FlightNumber { get; set; }
         public DateTime ScheduledDeparture { get; set; }
 
-        public virtual AircraftRoute AircraftRoute { get; set; }
+        public virtual RouteAircraft RouteAircraft { get; set; }
         public virtual ICollection<Booking> Booking { get; set; }
     }
 }

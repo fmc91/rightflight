@@ -154,11 +154,131 @@
                     </Setter>
                 </Trigger>
             </Style.Triggers>
+        </Style>
 
-            
+        <Style x:Key="AddButtonStyle" TargetType="Button">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse x:Name="Circle" Width="26" Height="26" StrokeThickness="1">
+                                <Ellipse.Fill>
+                                    <LinearGradientBrush StartPoint="0.3,0.3" EndPoint="0.7,0.7">
+                                        <GradientStop Color="#6bcf53" Offset="0"/>
+                                        <GradientStop Color="#57ba3f" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Line X1="13" Y1="4" X2="13" Y2="22" Stroke="White" StrokeThickness="4"/>
+                            <Line X1="4" Y1="13" X2="22" Y2="13" Stroke="White" StrokeThickness="4"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Circle" Property="Stroke" Value="#93d1fa"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Circle" Property="Fill">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0.3,0.3" EndPoint="0.7,0.7">
+                                            <GradientStop Color="#80e667" Offset="0"/>
+                                            <GradientStop Color="#67d14d" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Margin" Value="5 0"/>
+        </Style>
+
+        <Style x:Key="RemoveButtonStyle" TargetType="Button">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse x:Name="Circle" Width="26" Height="26" StrokeThickness="1">
+                                <Ellipse.Fill>
+                                    <LinearGradientBrush StartPoint="0.3,0.3" EndPoint="0.7,0.7">
+                                        <GradientStop Color="#eb5454" Offset="0"/>
+                                        <GradientStop Color="#c23434" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Line X1="6" Y1="6" X2="20" Y2="20" Stroke="White" StrokeThickness="4"/>
+                            <Line X1="20" Y1="6" X2="6" Y2="20" Stroke="White" StrokeThickness="4"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Circle" Property="Stroke" Value="#93d1fa"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Circle" Property="Fill">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0.3,0.3" EndPoint="0.7,0.7">
+                                            <GradientStop Color="#f26f6f" Offset="0"/>
+                                            <GradientStop Color="#e05555" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Margin" Value="5 0"/>
+        </Style>
+
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.4,0" EndPoint="0.6,1">
+                        <GradientStop Color="#e0e2e9" Offset="0"/>
+                        <GradientStop Color="#cfd6da" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Header" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="TextBoxLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="2 2 2 4"/>
+        </Style>
+
+        <Style x:Key="TextBoxLeftLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="2 2 4 2"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="MiscTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="2"/>
         </Style>
 
         <ImageBrush x:Key="AircraftWingBrush" ImageSource="pack://application:,,,/Images/aircraft_wing.jpeg" Stretch="UniformToFill"/>
+
+        <local:AirportConverter x:Key="AirportConverter"/>
 
     </Application.Resources>
 </Application>

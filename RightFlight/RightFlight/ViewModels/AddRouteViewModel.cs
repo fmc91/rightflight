@@ -16,15 +16,15 @@ namespace RightFlight
 
         private Aircraft m_selectedAircraft;
 
-        private int m_durationHours;
+        private int? m_durationHours;
 
-        private int m_durationMinutes;
+        private int? m_durationMinutes;
 
-        private float m_adultFare;
+        private float? m_adultFare;
 
-        private float m_childFare;
+        private float? m_childFare;
 
-        private float m_infantFare;
+        private float? m_infantFare;
 
         private TravelClass m_selectedTravelClass;
 
@@ -113,7 +113,7 @@ namespace RightFlight
             }
         }
 
-        public int DurationHours
+        public int? DurationHours
         {
             get { return m_durationHours; }
 
@@ -127,7 +127,7 @@ namespace RightFlight
             }
         }
 
-        public int DurationMinutes
+        public int? DurationMinutes
         {
             get { return m_durationMinutes; }
 
@@ -141,7 +141,7 @@ namespace RightFlight
             }
         }
 
-        public float AdultFare
+        public float? AdultFare
         {
             get { return m_adultFare; }
 
@@ -155,7 +155,7 @@ namespace RightFlight
             }
         }
 
-        public float ChildFare
+        public float? ChildFare
         {
             get { return m_childFare; }
 
@@ -169,7 +169,7 @@ namespace RightFlight
             }
         }
 
-        public float InfantFare
+        public float? InfantFare
         {
             get { return m_infantFare; }
 
@@ -299,15 +299,15 @@ namespace RightFlight
             FlightDuration flightDuration = new FlightDuration
             {
                 Aircraft = SelectedAircraft,
-                DurationHours = DurationHours,
-                DurationMinutes = DurationMinutes
+                DurationHours = DurationHours.Value,
+                DurationMinutes = DurationMinutes.Value
             };
 
             FlightDurations.Add(flightDuration);
 
             SelectedAircraft = null;
-            DurationHours = 0;
-            DurationMinutes = 0;
+            DurationHours = null;
+            DurationMinutes = null;
         }
 
         public void AddPricingScheme(object o)
@@ -318,17 +318,17 @@ namespace RightFlight
             {
                 TravelClassCode = SelectedTravelClass.TravelClassCode,
                 TravelClassName = SelectedTravelClass.Name,
-                AdultFare = AdultFare,
-                ChildFare = ChildFare,
-                InfantFare = InfantFare
+                AdultFare = AdultFare.Value,
+                ChildFare = ChildFare.Value,
+                InfantFare = InfantFare.Value
             };
 
             ClassPricingSchemes.Add(pricingScheme);
 
             SelectedTravelClass = null;
-            AdultFare = 0;
-            ChildFare = 0;
-            InfantFare = 0;
+            AdultFare = null;
+            ChildFare = null;
+            InfantFare = null;
         }
 
         public void RemoveFlightDuration(FlightDuration flightDuration)
@@ -347,7 +347,8 @@ namespace RightFlight
 
             try
             {
-                m_crudManager.AddRoute(SelectedAirline, SelectedOrigin, SelectedDestination, FlightDurations.ToList(), ClassPricingSchemes.ToList());
+                m_crudManager.AddRoute(SelectedAirline.IataAirlineCode, SelectedOrigin.IataAirportCode, SelectedDestination.IataAirportCode,
+                                       FlightDurations.ToList(), ClassPricingSchemes.ToList());
 
                 MessageBox.Show("Route added.", "Success");
             }
@@ -371,6 +372,18 @@ namespace RightFlight
                 return false;
             }
 
+            if (DurationHours == null)
+            {
+                MessageBox.Show("Please enter a value for hours.", "Value required");
+                return false;
+            }
+
+            if (DurationMinutes == null)
+            {
+                MessageBox.Show("Please enter a value for minutes.", "Value required");
+                return false;
+            }
+
             if (DurationMinutes > 59)
             {
                 MessageBox.Show("Minutes cannot be greater than 59.", "Invalid input");
@@ -391,6 +404,24 @@ namespace RightFlight
             if (ClassPricingSchemes.Any(ps => ps.TravelClassCode == SelectedTravelClass.TravelClassCode))
             {
                 MessageBox.Show("You cannot add a pricing scheme for the same travel class more than once.", "Invalid input");
+                return false;
+            }
+
+            if (AdultFare == null)
+            {
+                MessageBox.Show("Please enter an adult fare.", "Adult fare required");
+                return false;
+            }
+
+            if (ChildFare == null)
+            {
+                MessageBox.Show("Please enter a child fare.", "Child fare required");
+                return false;
+            }
+
+            if (InfantFare == null)
+            {
+                MessageBox.Show("Please enter an infant fare.", "Infant fare required");
                 return false;
             }
 

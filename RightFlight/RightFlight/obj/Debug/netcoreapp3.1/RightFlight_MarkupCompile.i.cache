@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\App.xaml
-41442257929
+51298550957
 
-16755651792
+18298434857
 219978576951
-AddRoutePage.xaml;MainWindow.xaml;UserControls\AirportSuggestionBox.xaml;UserControls\SuggestionBox.xaml;
+AddFlightPage.xaml;AddRoutePage.xaml;MainWindow.xaml;UserControls\AirportSuggestionBox.xaml;UserControls\SuggestionBox.xaml;
 
 True
 

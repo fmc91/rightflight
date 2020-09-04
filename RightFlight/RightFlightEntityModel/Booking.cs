@@ -18,7 +18,7 @@ namespace RightFlightEntityModel
         public DateTime TimeOfBooking { get; set; }
 
         public virtual Flight Flight { get; set; }
-        public virtual TravelClass TravelClassCodeNavigation { get; set; }
+        public virtual TravelClass TravelClass { get; set; }
         public virtual ICollection<Passenger> Passenger { get; set; }
     }
 }

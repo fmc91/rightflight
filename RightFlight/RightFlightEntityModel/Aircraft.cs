@@ -7,12 +7,12 @@ namespace RightFlightEntityModel
     {
         public Aircraft()
         {
-            AircraftRoute = new HashSet<AircraftRoute>();
+            RouteAircraft = new HashSet<RouteAircraft>();
         }
 
         public string IcaoTypeCode { get; set; }
         public string Model { get; set; }
 
-        public virtual ICollection<AircraftRoute> AircraftRoute { get; set; }
+        public virtual ICollection<RouteAircraft> RouteAircraft { get; set; }
     }
 }
