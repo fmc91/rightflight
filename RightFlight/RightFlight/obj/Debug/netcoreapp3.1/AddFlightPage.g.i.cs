@@ -53,7 +53,7 @@ namespace RightFlight {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/RightFlight;component/addflightpage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/RightFlight;V1.0.0.0;component/addflightpage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\AddFlightPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

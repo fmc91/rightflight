@@ -40,11 +40,14 @@ namespace RightFlight
 
         private CrudManager m_crudManager;
 
+        private PageController m_pageController;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public AddRouteViewModel()
+        public AddRouteViewModel(CrudManager crudManager, PageController pageController)
         {
-            m_crudManager = new CrudManager();
+            m_crudManager = crudManager;
+            m_pageController = pageController;
 
             AirlineSearchResult = new List<Airline>();
             OriginSearchResult = new List<Airport>();
@@ -70,6 +73,8 @@ namespace RightFlight
         public Command<ClassPricingScheme> RemovePricingSchemeCommand { get; set; }
 
         public Command<object> ConfirmCommand { get; set; }
+
+        public Command<object> CancelCommand { get; set; }
 
         #endregion
 
@@ -262,6 +267,7 @@ namespace RightFlight
             RemoveFlightDurationCommand = new Command<FlightDuration>(RemoveFlightDuration);
             RemovePricingSchemeCommand = new Command<ClassPricingScheme>(RemovePricingScheme);
             ConfirmCommand = new Command<object>(Confirm);
+            CancelCommand = new Command<object>(Cancel);
         }
 
         public void OriginSearch()
@@ -350,12 +356,25 @@ namespace RightFlight
                 m_crudManager.AddRoute(SelectedAirline.IataAirlineCode, SelectedOrigin.IataAirportCode, SelectedDestination.IataAirportCode,
                                        FlightDurations.ToList(), ClassPricingSchemes.ToList());
 
-                MessageBox.Show("Route added.", "Success");
+                MessageBoxResult result = MessageBox.Show("Route added successfully. Add another?", "Success", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                    m_pageController.AddRoute();
+                else
+                    m_pageController.Home();
             }
             catch (InvalidOperationException ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
+        }
+
+        private void Cancel(object o)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel?", "Cancel?", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+                m_pageController.Home();
         }
 
         private bool ValidateAddFlightDuration()

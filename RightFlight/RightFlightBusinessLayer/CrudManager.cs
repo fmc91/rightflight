@@ -40,7 +40,7 @@ namespace RightFlightBusinessLayer
                 var airportQuery =
                     from a in db.Airport
                     join c in db.City on a.CityCode equals c.IataCityCode
-                    where a.Name.Contains(search) || c.Name.Contains(search) || a.IataAirportCode.Contains(search)
+                    where a.Name.Contains(search) || c.Name.Contains(search) || a.IataAirportCode == search
                     select a;
 
                 return airportQuery.ToList();
@@ -60,7 +60,72 @@ namespace RightFlightBusinessLayer
             }
         }
 
-        public void AddRoute(string iataAirlineCode, string originAirportCode, string destinationAirportCode, List<FlightDuration> flightDurations, List<ClassPricingScheme> pricingSchemes)
+        public List<CitySearchResult> CitySearch(string search)
+        {
+            using (FlightReservationContext db = new FlightReservationContext())
+            {
+                var cityQuery =
+                    from ci in db.City
+                    join co in db.Country on ci.CountryCode equals co.IsoCountryCode
+                    where ci.Name.Contains(search)
+                    select new CitySearchResult
+                    {
+                        IataCityCode = ci.IataCityCode,
+                        City = ci.Name,
+                        Country = co.Name
+                    };
+
+                return cityQuery.ToList();
+            }
+        }
+
+        public List<FlightSearchResult> FlightSearch(string originCityCode, string destinationCityCode, int adults, int children, int infants)
+        {
+            using (FlightReservationContext db = new FlightReservationContext())
+            {
+                var query =
+                    from f in db.Flight
+                    join ra in db.RouteAircraft on f.RouteAircraftId equals ra.RouteAircraftId
+                    join ac in db.Aircraft on ra.IcaoTypeCode equals ac.IcaoTypeCode
+                    join r in db.Route on ra.RouteId equals r.RouteId
+                    join al in db.Airline on r.AirlineCode equals al.IataAirlineCode
+                    join oap in db.Airport on r.OriginAirportCode equals oap.IataAirportCode
+                    join oci in db.City on oap.CityCode equals oci.IataCityCode
+                    join oco in db.Country on oci.CountryCode equals oco.IsoCountryCode
+                    join dap in db.Airport on r.DestinationAirportCode equals dap.IataAirportCode
+                    join dci in db.City on dap.CityCode equals dci.IataCityCode
+                    join dco in db.Country on dci.CountryCode equals dco.IsoCountryCode
+                    where oci.IataCityCode == originCityCode &&
+                          dci.IataCityCode == destinationCityCode
+                    orderby f.ScheduledDeparture
+                    select new FlightSearchResult
+                    {
+                        FlightId = f.FlightId,
+                        OriginAirportCode = oap.IataAirportCode,
+                        OriginAirport = oap.Name,
+                        OriginCity = oci.Name,
+                        OriginCountry = oco.Name,
+                        DestinationAirportCode = dap.IataAirportCode,
+                        DestinationAirport = dap.Name,
+                        DestinationCity = dci.Name,
+                        DestinationCountry = dco.Name,
+                        Airline = al.Name,
+                        AirlineLogoPath = al.LogoPath,
+                        DepartureTime = f.ScheduledDeparture,
+                        ArrivalTime = ArrivalTime.Calculate(f.ScheduledDeparture, ra.FlightDuration, oci.TimeZone, dci.TimeZone),
+                        FlightDuration = TimeSpan.FromMinutes(ra.FlightDuration),
+                        FlightNumber = f.FlightNumber,
+                        TicketPrices = TicketPrice.Calculate(JsonConvert.DeserializeObject<List<ClassPricingScheme>>(r.PricingScheme),
+                                                             adults, children, infants),
+                        AircraftType = ac.Model                        
+                    };
+
+                return query.ToList();
+            }
+        }
+
+        public void AddRoute(string iataAirlineCode, string originAirportCode, string destinationAirportCode,
+                             List<FlightDuration> flightDurations, List<ClassPricingScheme> pricingSchemes)
         {
             if (DoesRouteExist(iataAirlineCode, originAirportCode, destinationAirportCode))
                 throw new InvalidOperationException("Route already exists.");
@@ -198,6 +263,62 @@ namespace RightFlightBusinessLayer
                     select r;
 
                 return routeQuery.Any();
+            }
+        }
+
+        public string CreateBooking(int flightId, string travelClassCode, float amount, List<PassengerInfo> passengers)
+        {
+            using (FlightReservationContext db = new FlightReservationContext())
+            {
+                Booking booking = new Booking
+                {
+                    FlightId = flightId,
+                    BookingReference = BookingReference.Generate(),
+                    TravelClassCode = travelClassCode,
+                    Cost = (decimal)amount,
+                    TimeOfBooking = DateTime.Now
+                };
+
+                db.Booking.Add(booking);
+                db.SaveChanges();
+
+                foreach (PassengerInfo p in passengers)
+                {
+                    Passenger passenger = new Passenger
+                    {
+                        BookingId = booking.BookingId,
+                        FirstName = p.FirstName,
+                        LastName = p.LastName,
+                        DateOfBirth = p.DateOfBirth,
+                        NationalityId = p.NationalityId,
+                        Address = p.Address,
+                        City = p.City,
+                        Country = p.Country,
+                        Postcode = p.Postcode
+                    };
+
+                    db.Passenger.Add(passenger);
+                }
+
+                db.SaveChanges();
+
+                return booking.BookingReference;
+            }
+        }
+
+        public List<NationalityInfo> GetNationalities()
+        {
+            using (FlightReservationContext db = new FlightReservationContext())
+            {
+                var nationalityQuery =
+                    from n in db.Nationality
+                    select new NationalityInfo
+                    {
+                        NationalityId = n.NationalityId,
+                        CountryName = n.CountryName
+                    };
+
+                return nationalityQuery.ToList();
             }
         }
     }

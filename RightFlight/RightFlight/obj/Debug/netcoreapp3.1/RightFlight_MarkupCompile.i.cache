@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
 C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\App.xaml
-51298550957
+8-1079145940
 
-18298434857
+25-655098210
 219978576951
-AddFlightPage.xaml;AddRoutePage.xaml;MainWindow.xaml;UserControls\AirportSuggestionBox.xaml;UserControls\SuggestionBox.xaml;
+Pages\AddFlightPage.xaml;Pages\AddRoutePage.xaml;Pages\BookFlightPage.xaml;Pages\FlightSearchPage.xaml;Pages\HomePage.xaml;UserControls\AirportSuggestionBox.xaml;UserControls\IncrementBox.xaml;UserControls\SuggestionBox.xaml;
 
 True
 

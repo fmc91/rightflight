@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RightFlight"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             StartupUri="MainWindow.xaml">
+             Startup="AppStartup">
     <Application.Resources>
 
         <local:HalveConverter x:Key="Halve"/>
@@ -239,6 +239,14 @@
             <Setter Property="Margin" Value="5 0"/>
         </Style>
 
+        <Style x:Key="HomeButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
         <Style x:Key="CardStyle" TargetType="Border">
             <Setter Property="CornerRadius" Value="15"/>
             <Setter Property="Padding" Value="15"/>
@@ -254,8 +262,9 @@
         </Style>
 
         <Style x:Key="Header" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
         <Style x:Key="TextBoxLabel" TargetType="TextBlock">
@@ -275,10 +284,75 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Margin" Value="2"/>
         </Style>
+        
+        <!--#region Flight Search Result Styles-->
+
+        <Style x:Key="DateStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0 0 0 6"/>
+        </Style>
+
+        <Style x:Key="CityLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0 0 4 0"/>
+        </Style>
+
+        <Style x:Key="CityStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+
+        <Style x:Key="AirportStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+        </Style>
+
+        <Style x:Key="DurationLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0 0 4 0"/>
+        </Style>
+
+        <Style x:Key="DurationStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style x:Key="TimeLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="TimeStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="AirlineStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0 0 0 4"/>
+        </Style>
+
+        <Style x:Key="FlightNumberStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0 0 0 4"/>
+        </Style>
+
+        <Style x:Key="AircraftTypeStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+        
+        <!--#endregion-->
 
         <ImageBrush x:Key="AircraftWingBrush" ImageSource="pack://application:,,,/Images/aircraft_wing.jpeg" Stretch="UniformToFill"/>
 
         <local:AirportConverter x:Key="AirportConverter"/>
+
+        <local:TimeSpanConverter x:Key="TimeSpanConverter"/>
 
     </Application.Resources>
 </Application>

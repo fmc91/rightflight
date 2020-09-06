@@ -1,8 +1,11 @@
-﻿C:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs
+﻿
 FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\App.xaml;;
-FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\AddFlightPage.xaml;;
-FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\AddRoutePage.xaml;;
-FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\MainWindow.xaml;;
+FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\Pages\AddFlightPage.xaml;;
+FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\Pages\AddRoutePage.xaml;;
+FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\Pages\BookFlightPage.xaml;;
+FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\Pages\FlightSearchPage.xaml;;
+FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\Pages\HomePage.xaml;;
 FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\UserControls\AirportSuggestionBox.xaml;;
+FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\UserControls\IncrementBox.xaml;;
 FC:\Users\fazal\Sparta\IndividualProject\RightFlight\RightFlight\UserControls\SuggestionBox.xaml;;
 

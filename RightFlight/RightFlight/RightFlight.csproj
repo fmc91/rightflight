@@ -8,6 +8,58 @@
 
   <ItemGroup>
     <None Remove="Images\aircraft_wing.jpeg" />
+    <None Remove="Logos\aegean.jpg" />
+    <None Remove="Logos\aerlingus.jpg" />
+    <None Remove="Logos\aeroflot.jpg" />
+    <None Remove="Logos\aeromexico.jpg" />
+    <None Remove="Logos\airasia.png" />
+    <None Remove="Logos\aircanada.jpg" />
+    <None Remove="Logos\airchina.jpg" />
+    <None Remove="Logos\airfrance.jpg" />
+    <None Remove="Logos\airindia.jpg" />
+    <None Remove="Logos\airnewzealand.jpg" />
+    <None Remove="Logos\alitalia.jpg" />
+    <None Remove="Logos\americanairlines.jpg" />
+    <None Remove="Logos\ana.jpg" />
+    <None Remove="Logos\britishairways.jpg" />
+    <None Remove="Logos\brusselsairlines.jpg" />
+    <None Remove="Logos\cathaypacific.png" />
+    <None Remove="Logos\chinasouthernairlines.jpg" />
+    <None Remove="Logos\delta.jpg" />
+    <None Remove="Logos\easyjet.jpg" />
+    <None Remove="Logos\egyptair.jpg" />
+    <None Remove="Logos\emirates.png" />
+    <None Remove="Logos\ethiopian.jpg" />
+    <None Remove="Logos\etihad.png" />
+    <None Remove="Logos\eurowings.jpg" />
+    <None Remove="Logos\garudaindonesia.jpg" />
+    <None Remove="Logos\hawaiianairlines.jpg" />
+    <None Remove="Logos\iberia.png" />
+    <None Remove="Logos\japanairlines.jpg" />
+    <None Remove="Logos\jet2.jpg" />
+    <None Remove="Logos\klm.jpg" />
+    <None Remove="Logos\latam.png" />
+    <None Remove="Logos\lionair.jpg" />
+    <None Remove="Logos\lotpolishairlines.jpg" />
+    <None Remove="Logos\lufthansa.jpg" />
+    <None Remove="Logos\malaysiaairlines.jpg" />
+    <None Remove="Logos\norwegian.jpg" />
+    <None Remove="Logos\qantas.jpg" />
+    <None Remove="Logos\royalairmaroc.jpg" />
+    <None Remove="Logos\ryanair.jpg" />
+    <None Remove="Logos\saudia.jpg" />
+    <None Remove="Logos\scandinavianairlines.jpg" />
+    <None Remove="Logos\singaporeairlines.jpg" />
+    <None Remove="Logos\southafricanairways.jpg" />
+    <None Remove="Logos\southwestairlines.jpg" />
+    <None Remove="Logos\swiss.jpg" />
+    <None Remove="Logos\tapairportugal.jpg" />
+    <None Remove="Logos\tui.jpg" />
+    <None Remove="Logos\turkishairlines.jpg" />
+    <None Remove="Logos\united.png" />
+    <None Remove="Logos\virginatlantic.jpg" />
+    <None Remove="Logos\vuelingairlines.jpg" />
+    <None Remove="Logos\wizzair.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +69,58 @@
 
   <ItemGroup>
     <Resource Include="Images\aircraft_wing.jpeg" />
+    <Resource Include="Logos\aegean.jpg" />
+    <Resource Include="Logos\aerlingus.jpg" />
+    <Resource Include="Logos\aeroflot.jpg" />
+    <Resource Include="Logos\aeromexico.jpg" />
+    <Resource Include="Logos\airasia.png" />
+    <Resource Include="Logos\aircanada.jpg" />
+    <Resource Include="Logos\airchina.jpg" />
+    <Resource Include="Logos\airfrance.jpg" />
+    <Resource Include="Logos\airindia.jpg" />
+    <Resource Include="Logos\airnewzealand.jpg" />
+    <Resource Include="Logos\alitalia.jpg" />
+    <Resource Include="Logos\americanairlines.jpg" />
+    <Resource Include="Logos\ana.jpg" />
+    <Resource Include="Logos\britishairways.jpg" />
+    <Resource Include="Logos\brusselsairlines.jpg" />
+    <Resource Include="Logos\cathaypacific.png" />
+    <Resource Include="Logos\chinasouthernairlines.jpg" />
+    <Resource Include="Logos\delta.jpg" />
+    <Resource Include="Logos\easyjet.jpg" />
+    <Resource Include="Logos\egyptair.jpg" />
+    <Resource Include="Logos\emirates.png" />
+    <Resource Include="Logos\ethiopian.jpg" />
+    <Resource Include="Logos\etihad.png" />
+    <Resource Include="Logos\eurowings.jpg" />
+    <Resource Include="Logos\garudaindonesia.jpg" />
+    <Resource Include="Logos\hawaiianairlines.jpg" />
+    <Resource Include="Logos\iberia.png" />
+    <Resource Include="Logos\japanairlines.jpg" />
+    <Resource Include="Logos\jet2.jpg" />
+    <Resource Include="Logos\klm.jpg" />
+    <Resource Include="Logos\latam.png" />
+    <Resource Include="Logos\lionair.jpg" />
+    <Resource Include="Logos\lotpolishairlines.jpg" />
+    <Resource Include="Logos\lufthansa.jpg" />
+    <Resource Include="Logos\malaysiaairlines.jpg" />
+    <Resource Include="Logos\norwegian.jpg" />
+    <Resource Include="Logos\qantas.jpg" />
+    <Resource Include="Logos\royalairmaroc.jpg" />
+    <Resource Include="Logos\ryanair.jpg" />
+    <Resource Include="Logos\saudia.jpg" />
+    <Resource Include="Logos\scandinavianairlines.jpg" />
+    <Resource Include="Logos\singaporeairlines.jpg" />
+    <Resource Include="Logos\southafricanairways.jpg" />
+    <Resource Include="Logos\southwestairlines.jpg" />
+    <Resource Include="Logos\swiss.jpg" />
+    <Resource Include="Logos\tapairportugal.jpg" />
+    <Resource Include="Logos\tui.jpg" />
+    <Resource Include="Logos\turkishairlines.jpg" />
+    <Resource Include="Logos\united.png" />
+    <Resource Include="Logos\virginatlantic.jpg" />
+    <Resource Include="Logos\vuelingairlines.jpg" />
+    <Resource Include="Logos\wizzair.jpg" />
   </ItemGroup>
 
 </Project>

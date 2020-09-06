@@ -1,0 +1,212 @@
+﻿<Page x:Class="RightFlight.BookFlightPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RightFlight"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      x:Name="Root"
+      Title="Book Flight"
+      WindowTitle="RightFlight - Book Flight"
+      ShowsNavigationUI="False"
+      Background="{StaticResource AircraftWingBrush}">
+
+    <Page.Resources>
+        <Style x:Key="PriceStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Georgia Pro"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+
+        <Style x:Key="BookFlightButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Margin" Value="5 0"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <local:NationalityConverter x:Key="NationalityConverter"/>
+    </Page.Resources>
+
+    <ScrollViewer>
+
+        <StackPanel MaxWidth="800" MinWidth="600">
+            <Border Style="{StaticResource CardStyle}">
+                <TextBlock Style="{StaticResource Header}" Text="Book Flight"/>
+            </Border>
+
+            <Border Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource DateStyle}"
+                                           Text="{Binding Path=SelectedFlight.DepartureTime, StringFormat='dddd dd MMMM yyyy'}"/>
+
+                    <StackPanel Grid.Column="0" Grid.Row="1" Margin="0 6">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource CityLabelStyle}" Text="From:"/>
+                            <TextBlock Style="{StaticResource CityStyle}" Text="{Binding Path=SelectedFlight.OriginCity}"/>
+                            <TextBlock Style="{StaticResource CityStyle}" Text="{Binding Path=SelectedFlight.OriginCountry, StringFormat=', {0}'}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource AirportStyle}" Text="{Binding Path=SelectedFlight.OriginAirport}"/>
+                            <TextBlock Style="{StaticResource AirportStyle}" Text="{Binding Path=SelectedFlight.OriginAirportCode, StringFormat=' ({0})'}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="0" Grid.Row="2" Margin="0 6">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource CityLabelStyle}" Text="To:"/>
+                            <TextBlock Style="{StaticResource CityStyle}" Text="{Binding Path=SelectedFlight.DestinationCity}"/>
+                            <TextBlock Style="{StaticResource CityStyle}" Text="{Binding Path=SelectedFlight.DestinationCountry, StringFormat=', {0}'}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource AirportStyle}" Text="{Binding Path=SelectedFlight.DestinationAirport}"/>
+                            <TextBlock Style="{StaticResource AirportStyle}" Text="{Binding Path=SelectedFlight.DestinationAirportCode, StringFormat=' ({0})'}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource DurationLabelStyle}" Text="Duration:"/>
+                        <TextBlock Style="{StaticResource DurationStyle}"
+                                               Text="{Binding Path=SelectedFlight.FlightDuration, Converter={StaticResource TimeSpanConverter}}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+                        <TextBlock Style="{StaticResource TimeLabelStyle}" Text="Departure:"/>
+                        <TextBlock Style="{StaticResource TimeStyle}" Text="{Binding Path=SelectedFlight.DepartureTime, StringFormat='HH:mm'}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
+                        <TextBlock Style="{StaticResource TimeLabelStyle}" Text="Arrival:"/>
+                        <TextBlock Style="{StaticResource TimeStyle}" Text="{Binding Path=SelectedFlight.ArrivalTime, StringFormat='HH:mm'}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="4">
+                        <Image Source="{Binding Path=SelectedFlight.AirlineLogoPath}"/>
+                        <TextBlock Style="{StaticResource AirlineStyle}" Text="{Binding Path=SelectedFlight.Airline}"/>
+                        <TextBlock Style="{StaticResource FlightNumberStyle}" Text="{Binding Path=SelectedFlight.FlightNumber}"/>
+                        <TextBlock Style="{StaticResource AircraftTypeStyle}" Text="{Binding Path=SelectedFlight.AircraftType}"/>
+
+                        <ComboBox Margin="0 8" Width="150" HorizontalAlignment="Right"
+                                  ItemsSource="{Binding Path=SelectedFlight.TicketPrices}"
+                                  SelectedItem="{Binding SelectedTicketType, Mode=TwoWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontSize="14" Text="{Binding TravelClass}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock Style="{StaticResource PriceStyle}"
+                                   Text="{Binding Path=SelectedTicketType.Amount, StringFormat='£{0:#,#}'}"/>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource CardStyle}">
+                <TextBlock FontSize="16" FontWeight="SemiBold" Text="Please enter the details of each passenger below."/>
+            </Border>
+
+            <ItemsControl ItemsSource="{Binding PassengerInfo}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CardStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="8"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="12"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="12"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" FontSize="18" FontWeight="SemiBold"
+                                           Text="{Binding Index, StringFormat='Passenger {0}'}"/>
+
+                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource TextBoxLabel}" Text="First Name:"/>
+                                <TextBox Grid.Column="0" Grid.Row="3" Style="{StaticResource MiscTextBoxStyle}"
+                                         Text="{Binding FirstName}"/>
+
+                                <TextBlock Grid.Column="2" Grid.Row="2" Style="{StaticResource TextBoxLabel}" Text="Last Name:"/>
+                                <TextBox Grid.Column="2" Grid.Row="3" Style="{StaticResource MiscTextBoxStyle}"
+                                         Text="{Binding LastName}"/>
+
+                                <TextBlock Grid.Column="0" Grid.Row="5" Style="{StaticResource TextBoxLabel}" Text="Date of Birth:"/>
+                                <DatePicker Grid.Column="0" Grid.Row="6" FontSize="14" SelectedDate="{Binding DateOfBirth}"/>
+
+                                <TextBlock Grid.Column="2" Grid.Row="5" Style="{StaticResource TextBoxLabel}" Text="Nationality:"/>
+                                <ComboBox Grid.Column="2" Grid.Row="6" FontSize="14" ItemsSource="{Binding ElementName=Root, Path=DataContext.Nationalities}"
+                                          SelectedItem="{Binding NationalityId, Mode=OneWayToSource, Converter={StaticResource NationalityConverter}}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock FontSize="14" Text="{Binding CountryName}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+
+                                <TextBlock Grid.Column="4" Grid.Row="2" Style="{StaticResource TextBoxLabel}" Text="Address:"/>
+                                <TextBox Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="3" Style="{StaticResource MiscTextBoxStyle}"
+                                         Text="{Binding Address}"/>
+
+                                <TextBlock Grid.Column="4" Grid.Row="5" Style="{StaticResource TextBoxLabel}" Text="City:"/>
+                                <TextBox Grid.Column="4" Grid.Row="6" Style="{StaticResource MiscTextBoxStyle}" VerticalAlignment="Center"
+                                         Text="{Binding City}"/>
+
+                                <TextBlock Grid.Column="6" Grid.Row="5" Style="{StaticResource TextBoxLabel}" Text="Country:"/>
+                                <TextBox Grid.Column="6" Grid.Row="6" Style="{StaticResource MiscTextBoxStyle}" VerticalAlignment="Center"
+                                         Text="{Binding Country}"/>
+
+                                <TextBlock Grid.Column="6" Grid.Row="8" Style="{StaticResource TextBoxLabel}" Text="Postcode:"/>
+                                <TextBox Grid.Column="6" Grid.Row="9" Style="{StaticResource MiscTextBoxStyle}"
+                                         Text="{Binding Postcode}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource BookFlightButtonStyle}" Content="Confirm" Command="{Binding ConfirmCommand}"/>
+                    <Button Style="{StaticResource BookFlightButtonStyle}" Content="Cancel" Command="{Binding CancelCommand}"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+
+    </ScrollViewer>
+</Page>
