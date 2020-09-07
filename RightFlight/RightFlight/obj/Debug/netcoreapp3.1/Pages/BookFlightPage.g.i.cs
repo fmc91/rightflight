@@ -61,7 +61,7 @@ namespace RightFlight {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/RightFlight;component/pages/bookflightpage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/RightFlight;V1.0.0.0;component/pages/bookflightpage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Pages\BookFlightPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

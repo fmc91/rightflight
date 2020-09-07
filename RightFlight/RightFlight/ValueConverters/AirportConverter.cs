@@ -1,4 +1,4 @@
-﻿using RightFlightEntityModel;
+﻿using RightFlightBusinessLayer;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -9,7 +9,7 @@ namespace RightFlight
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Airport airport = (Airport)value;
+            AirportInfo airport = (AirportInfo)value;
             string strParameter = parameter as string;
 
             if (strParameter == "code")

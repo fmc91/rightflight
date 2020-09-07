@@ -12,13 +12,13 @@ namespace RightFlight
     {
         #region Private Backing Fields
 
-        private Airline m_selectedAirline;
+        private AirlineInfo m_selectedAirline;
 
-        private Airport m_selectedAirport;
+        private AirportInfo m_selectedAirport;
 
-        private List<Airline> m_airlineSearchResult;
+        private List<AirlineInfo> m_airlineSearchResult;
 
-        private List<Airport> m_airportSearchResult;
+        private List<AirportInfo> m_airportSearchResult;
 
         private List<RouteInfo> m_routeSearchResult;
 
@@ -39,8 +39,8 @@ namespace RightFlight
             m_crudManager = crudManager;
             m_pageController = pageController;
 
-            AirlineSearchResult = new List<Airline>();
-            AirportSearchResult = new List<Airport>();
+            AirlineSearchResult = new List<AirlineInfo>();
+            AirportSearchResult = new List<AirportInfo>();
             RouteSearchResult = new List<RouteInfo>();
 
             SelectedDate = DateTime.Today;
@@ -72,7 +72,7 @@ namespace RightFlight
 
         #region Call-Method-On-Change Properties
 
-        public Airline SelectedAirline
+        public AirlineInfo SelectedAirline
         {
             get { return m_selectedAirline; }
 
@@ -86,7 +86,7 @@ namespace RightFlight
             }
         }
 
-        public Airport SelectedAirport
+        public AirportInfo SelectedAirport
         {
             get { return m_selectedAirport; }
 
@@ -118,7 +118,7 @@ namespace RightFlight
 
         #region INPC Properties
 
-        public List<Airline> AirlineSearchResult
+        public List<AirlineInfo> AirlineSearchResult
         {
             get { return m_airlineSearchResult; }
 
@@ -132,7 +132,7 @@ namespace RightFlight
             }
         }
 
-        public List<Airport> AirportSearchResult
+        public List<AirportInfo> AirportSearchResult
         {
             get { return m_airportSearchResult; }
 

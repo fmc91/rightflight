@@ -14,7 +14,7 @@ namespace RightFlight
     {
         #region Private Backing Fields
 
-        private Aircraft m_selectedAircraft;
+        private AircraftInfo m_selectedAircraft;
 
         private int? m_durationHours;
 
@@ -26,15 +26,15 @@ namespace RightFlight
 
         private float? m_infantFare;
 
-        private TravelClass m_selectedTravelClass;
+        private TravelClassInfo m_selectedTravelClass;
 
-        private List<Airline> m_airlineSearchResult;
+        private List<AirlineInfo> m_airlineSearchResult;
 
-        private List<Airport> m_originSearchResult;
+        private List<AirportInfo> m_originSearchResult;
 
-        private List<Airport> m_destinationSearchResult;
+        private List<AirportInfo> m_destinationSearchResult;
 
-        private List<Aircraft> m_aircraftSearchResult;
+        private List<AircraftInfo> m_aircraftSearchResult;
 
         #endregion
 
@@ -49,15 +49,15 @@ namespace RightFlight
             m_crudManager = crudManager;
             m_pageController = pageController;
 
-            AirlineSearchResult = new List<Airline>();
-            OriginSearchResult = new List<Airport>();
-            DestinationSearchResult = new List<Airport>();
-            AircraftSearchResult = new List<Aircraft>();
+            AirlineSearchResult = new List<AirlineInfo>();
+            OriginSearchResult = new List<AirportInfo>();
+            DestinationSearchResult = new List<AirportInfo>();
+            AircraftSearchResult = new List<AircraftInfo>();
 
             FlightDurations = new ObservableCollection<FlightDuration>();
             ClassPricingSchemes = new ObservableCollection<ClassPricingScheme>();
 
-            TravelClasses = new ObservableCollection<TravelClass>(m_crudManager.GetTravelClasses());
+            TravelClasses = new ObservableCollection<TravelClassInfo>(m_crudManager.GetTravelClasses());
 
             InitCommands();
         }
@@ -88,13 +88,13 @@ namespace RightFlight
 
         public string AircraftSearchText { get; set; }
 
-        public Airline SelectedAirline { get; set; }
+        public AirlineInfo SelectedAirline { get; set; }
 
-        public Airport SelectedOrigin { get; set; }
+        public AirportInfo SelectedOrigin { get; set; }
 
-        public Airport SelectedDestination { get; set; }
+        public AirportInfo SelectedDestination { get; set; }
 
-        public ObservableCollection<TravelClass> TravelClasses { get; set; }
+        public ObservableCollection<TravelClassInfo> TravelClasses { get; set; }
 
         public ObservableCollection<FlightDuration> FlightDurations { get; set; }
 
@@ -104,7 +104,7 @@ namespace RightFlight
 
         #region INPC Properties
 
-        public Aircraft SelectedAircraft
+        public AircraftInfo SelectedAircraft
         {
             get { return m_selectedAircraft; }
 
@@ -188,7 +188,7 @@ namespace RightFlight
             }
         }
 
-        public List<Airline> AirlineSearchResult
+        public List<AirlineInfo> AirlineSearchResult
         {
             get { return m_airlineSearchResult; }
 
@@ -202,7 +202,7 @@ namespace RightFlight
             }
         }
 
-        public List<Airport> OriginSearchResult
+        public List<AirportInfo> OriginSearchResult
         {
             get { return m_originSearchResult; }
 
@@ -216,7 +216,7 @@ namespace RightFlight
             }
         }
 
-        public List<Airport> DestinationSearchResult
+        public List<AirportInfo> DestinationSearchResult
         {
             get { return m_destinationSearchResult; }
 
@@ -230,7 +230,7 @@ namespace RightFlight
             }
         }
 
-        public List<Aircraft> AircraftSearchResult
+        public List<AircraftInfo> AircraftSearchResult
         {
             get { return m_aircraftSearchResult; }
 
@@ -244,7 +244,7 @@ namespace RightFlight
             }
         }
 
-        public TravelClass SelectedTravelClass
+        public TravelClassInfo SelectedTravelClass
         {
             get { return m_selectedTravelClass; }
 

@@ -11,7 +11,7 @@ namespace RightFlight
 
         private PageController m_pageController;
 
-        public BookFlightViewModel(CrudManager crudManager, PageController pageController, FlightSearchResult selectedFlight, int adults, int children, int infants)
+        public BookFlightViewModel(CrudManager crudManager, PageController pageController, FlightInfo selectedFlight, int adults, int children, int infants)
         {
             m_crudManager = crudManager;
             m_pageController = pageController;
@@ -49,7 +49,7 @@ namespace RightFlight
 
         public int Infants { get; set; }
 
-        public FlightSearchResult SelectedFlight { get; set; }
+        public FlightInfo SelectedFlight { get; set; }
 
         public TicketPriceInfo SelectedTicketType { get; set; }
 

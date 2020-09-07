@@ -11,11 +11,11 @@ namespace RightFlight
     {
         #region Private backing fields
 
-        private List<CitySearchResult> m_originCitySearchResult;
+        private List<CityInfo> m_originCitySearchResult;
 
-        private List<CitySearchResult> m_destinationCitySearchResult;
+        private List<CityInfo> m_destinationCitySearchResult;
 
-        private List<FlightSearchResult> m_flightSearchResult;
+        private List<FlightInfo> m_flightSearchResult;
 
         #endregion
 
@@ -30,9 +30,9 @@ namespace RightFlight
             m_crudManager = crudManager;
             m_pageController = pageController;
 
-            OriginCitySearchResult = new List<CitySearchResult>();
-            DestinationCitySearchResult = new List<CitySearchResult>();
-            FlightSearchResult = new List<FlightSearchResult>();
+            OriginCitySearchResult = new List<CityInfo>();
+            DestinationCitySearchResult = new List<CityInfo>();
+            FlightSearchResult = new List<FlightInfo>();
 
             InitCommands();
         }
@@ -41,7 +41,7 @@ namespace RightFlight
 
         public Command<object> FlightSearchCommand { get; set; }
 
-        public Command<FlightSearchResult> BookCommand { get; set; }
+        public Command<FlightInfo> BookCommand { get; set; }
 
         #region Auto-properties
 
@@ -55,15 +55,15 @@ namespace RightFlight
 
         public int Infants { get; set; }
 
-        public CitySearchResult SelectedOriginCity { get; set; }
+        public CityInfo SelectedOriginCity { get; set; }
 
-        public CitySearchResult SelectedDestinationCity { get; set; }
+        public CityInfo SelectedDestinationCity { get; set; }
 
         #endregion
 
         #region INPC Properties
 
-        public List<CitySearchResult> OriginCitySearchResult
+        public List<CityInfo> OriginCitySearchResult
         {
             get { return m_originCitySearchResult; }
 
@@ -77,7 +77,7 @@ namespace RightFlight
             }
         }
 
-        public List<CitySearchResult> DestinationCitySearchResult
+        public List<CityInfo> DestinationCitySearchResult
         {
             get { return m_destinationCitySearchResult; }
 
@@ -91,7 +91,7 @@ namespace RightFlight
             }
         }
 
-        public List<FlightSearchResult> FlightSearchResult
+        public List<FlightInfo> FlightSearchResult
         {
             get { return m_flightSearchResult; }
 
@@ -110,7 +110,7 @@ namespace RightFlight
         private void InitCommands()
         {
             FlightSearchCommand = new Command<object>(FlightSearch);
-            BookCommand = new Command<FlightSearchResult>(Book);
+            BookCommand = new Command<FlightInfo>(Book);
             HomeCommand = new Command<object>(Home);
         }
 
@@ -140,7 +140,7 @@ namespace RightFlight
             FlightSearchResult = m_crudManager.FlightSearch(SelectedOriginCity.IataCityCode, SelectedDestinationCity.IataCityCode, Adults, Children, Infants);
         }
 
-        private void Book(FlightSearchResult flightSearchResult)
+        private void Book(FlightInfo flightSearchResult)
         {
             m_pageController.BookFlight(flightSearchResult, Adults, Children, Infants);
         }

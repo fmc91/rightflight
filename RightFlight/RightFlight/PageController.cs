@@ -50,7 +50,7 @@ namespace RightFlight
             m_mainWindow.Navigate(flightSearchPage);
         }
 
-        public void BookFlight(FlightSearchResult selectedFlight, int adults, int children, int infants)
+        public void BookFlight(FlightInfo selectedFlight, int adults, int children, int infants)
         {
             BookFlightViewModel viewModel = new BookFlightViewModel(new CrudManager(), this, selectedFlight, adults, children, infants);
 

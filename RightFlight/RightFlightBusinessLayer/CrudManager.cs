@@ -8,32 +8,41 @@ namespace RightFlightBusinessLayer
 {
     public class CrudManager
     {
-        public List<TravelClass> GetTravelClasses()
+        public List<TravelClassInfo> GetTravelClasses()
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
                 var query =
                     from tc in db.TravelClass
-                    select tc;
+                    select new TravelClassInfo
+                    {
+                        TravelClassCode = tc.TravelClassCode,
+                        Name = tc.Name
+                    };
 
                 return query.ToList();
             }
         }
 
-        public List<Airline> AirlineSearch(string search)
+        public List<AirlineInfo> AirlineSearch(string search)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
                 var airlineQuery =
                     from a in db.Airline
                     where a.Name.Contains(search)
-                    select a;
+                    select new AirlineInfo
+                    {
+                        IataAirlineCode = a.IataAirlineCode,
+                        Name = a.Name,
+                        LogoPath = a.LogoPath
+                    };
 
                 return airlineQuery.ToList();
             }
         }
 
-        public List<Airport> AirportSearch(string search)
+        public List<AirportInfo> AirportSearch(string search)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -41,26 +50,34 @@ namespace RightFlightBusinessLayer
                     from a in db.Airport
                     join c in db.City on a.CityCode equals c.IataCityCode
                     where a.Name.Contains(search) || c.Name.Contains(search) || a.IataAirportCode == search
-                    select a;
+                    select new AirportInfo
+                    {
+                        IataAirportCode = a.IataAirportCode,
+                        Name = a.Name
+                    };
 
                 return airportQuery.ToList();
             }
         }
 
-        public List<Aircraft> AircraftSearch(string search)
+        public List<AircraftInfo> AircraftSearch(string search)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
                 var aircraftQuery =
                     from a in db.Aircraft
                     where a.Model.Contains(search) || a.IcaoTypeCode.Contains(search)
-                    select a;
+                    select new AircraftInfo
+                    {
+                        IcaoTypeCode = a.IcaoTypeCode,
+                        Model = a.Model
+                    };
 
                 return aircraftQuery.ToList();
             }
         }
 
-        public List<CitySearchResult> CitySearch(string search)
+        public List<CityInfo> CitySearch(string search)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -68,7 +85,7 @@ namespace RightFlightBusinessLayer
                     from ci in db.City
                     join co in db.Country on ci.CountryCode equals co.IsoCountryCode
                     where ci.Name.Contains(search)
-                    select new CitySearchResult
+                    select new CityInfo
                     {
                         IataCityCode = ci.IataCityCode,
                         City = ci.Name,
@@ -79,7 +96,7 @@ namespace RightFlightBusinessLayer
             }
         }
 
-        public List<FlightSearchResult> FlightSearch(string originCityCode, string destinationCityCode, int adults, int children, int infants)
+        public List<FlightInfo> FlightSearch(string originCityCode, string destinationCityCode, int adults, int children, int infants)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -98,7 +115,7 @@ namespace RightFlightBusinessLayer
                     where oci.IataCityCode == originCityCode &&
                           dci.IataCityCode == destinationCityCode
                     orderby f.ScheduledDeparture
-                    select new FlightSearchResult
+                    select new FlightInfo
                     {
                         FlightId = f.FlightId,
                         OriginAirportCode = oap.IataAirportCode,
