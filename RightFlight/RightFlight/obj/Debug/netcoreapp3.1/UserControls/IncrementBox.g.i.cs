@@ -61,7 +61,7 @@ namespace RightFlight {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/RightFlight;V1.0.0.0;component/usercontrols/incrementbox.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/RightFlight;component/usercontrols/incrementbox.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\UserControls\IncrementBox.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

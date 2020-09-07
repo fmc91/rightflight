@@ -21,6 +21,22 @@ namespace RightFlightBusinessLayer
                     };
 
                 return query.ToList();
+            }   
+    }
+
+        public List<NationalityInfo> GetNationalities()
+        {
+            using (FlightReservationContext db = new FlightReservationContext())
+            {
+                var nationalityQuery =
+                    from n in db.Nationality
+                    select new NationalityInfo
+                    {
+                        NationalityId = n.NationalityId,
+                        CountryName = n.CountryName
+                    };
+
+                return nationalityQuery.ToList();
             }
         }
 
@@ -321,22 +337,6 @@ namespace RightFlightBusinessLayer
 
                 return booking.BookingReference;
             }
-        }
-
-        public List<NationalityInfo> GetNationalities()
-        {
-            using (FlightReservationContext db = new FlightReservationContext())
-            {
-                var nationalityQuery =
-                    from n in db.Nationality
-                    select new NationalityInfo
-                    {
-                        NationalityId = n.NationalityId,
-                        CountryName = n.CountryName
-                    };
-
-                return nationalityQuery.ToList();
-            }
-        }
+        }        
     }
 }

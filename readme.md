@@ -91,3 +91,15 @@ The application also features a home page. The home page features three buttons 
 This sprint was successful and completed without any impediments. The minimum viable product is now complete, and therefore, the final sprint will focus on unit testing and code refactoring.
 
 It has been noted that leaving unit testing to the end is generally a precarious path - if bugs are discovered in the final sprint, this leaves little time to correct them. In future projects, it would be ideal to conduct unit testing in tandem with development, possibly using TDD.
+
+## Sprint 6
+
+### Review
+
+The final sprint focused on unit testing and code refactoring. Unit tests were created for CRUD functionality as well as other aspects of business logic, such as calculating ticket prices and arrival times. The CRUD functionality tested included the method used to add routes as well as the method used to add flights. The method used to calculate arrival times was tested under various scenarios, such as origin and destination cities being in the same time zone, the destination time zone being ahead of the origin time zone, the destination time zone being behind the origin time zone, a flight arriving the day after departing, and flights on dates where one or both of the origin and destination were observing daylight savings time. All unit tests passed and therefore there was no need to correct any bugs.
+
+Code refactoring focused on ensuring that mechanisms used to pass data between the view layer and business layer were consistent across all views, and that the view layer did not have access to irrelevant data or data that should be kept private.
+
+### Retrospective
+
+This sprint was a success as the code passed all unit tests and there were no major obstacles. However, it was noted during the code refactor that the business layer violates some principles of object-oriented programming, most notably the single responsibility principle. Although some functionality is delegated to static helper classes, most of the functionality in the business layer is performed by one class, known as the `CrudManager`. The name of this class would suggest that its functionality should be limited to database CRUD operations. However, it is also responsible for converting data into a form which is suitable for the view. This conflation of responsibilities could prove problematic if the project were to be expanded in its scope. In future, better analysis of responsibilities and class design is required prior to development to ensure this does not occur.
