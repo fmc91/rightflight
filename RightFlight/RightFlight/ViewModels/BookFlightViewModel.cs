@@ -1,15 +1,30 @@
 ﻿using RightFlightBusinessLayer;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace RightFlight
 {
-    public class BookFlightViewModel
+    public class BookFlightViewModel : INotifyPropertyChanged
     {
+        #region Private Backing Fields
+
+        private UiState m_uiState;
+
+        private TicketPriceInfo m_selectedTicketType;
+
+        private List<NationalityInfo> m_nationalities;
+
+        #endregion
+
         private CrudManager m_crudManager;
 
         private PageController m_pageController;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public BookFlightViewModel(CrudManager crudManager, PageController pageController, FlightInfo selectedFlight, int adults, int children, int infants)
         {
@@ -26,16 +41,20 @@ namespace RightFlight
             for (int i = 1; i <= Adults + Children + Infants; ++i)
                 PassengerInfo.Add(new PassengerInfo { Index = i, DateOfBirth = DateTime.Today });            
 
-            Nationalities = m_crudManager.GetNationalities();
+            Nationalities = new List<NationalityInfo>();
 
             SelectedTicketType = SelectedFlight.TicketPrices[0];
 
+            UiState = UiState.Normal;
+
             InitCommands();
+
+            GetNationalities();
         }
 
         #region Commands
 
-        public Command<object> ConfirmCommand { get; set; }
+        public AsyncCommand<object> ConfirmCommand { get; set; }
 
         public Command<object> CancelCommand { get; set; }
 
@@ -49,30 +68,80 @@ namespace RightFlight
 
         public int Infants { get; set; }
 
-        public FlightInfo SelectedFlight { get; set; }
-
-        public TicketPriceInfo SelectedTicketType { get; set; }
+        public FlightInfo SelectedFlight { get; set; }        
 
         public List<PassengerInfo> PassengerInfo { get; set; }
 
-        public List<NationalityInfo> Nationalities { get; set; }
+        #endregion
+
+        #region INPC Properties
+
+        public UiState UiState
+        {
+            get { return m_uiState; }
+
+            set
+            {
+                if (m_uiState != value)
+                {
+                    m_uiState = value;
+                    NotifyOfPropertyChanged();
+                }
+            }
+        }
+
+        public TicketPriceInfo SelectedTicketType
+        {
+            get { return m_selectedTicketType; }
+
+            set
+            {
+                if (m_selectedTicketType != value)
+                {
+                    m_selectedTicketType = value;
+                    NotifyOfPropertyChanged();
+                }
+            }
+        }
+
+        public List<NationalityInfo> Nationalities
+        {
+            get { return m_nationalities; }
+            set
+            {
+                if (m_nationalities != value)
+                {
+                    m_nationalities = value;
+                    NotifyOfPropertyChanged();
+                }
+            }
+        }
 
         #endregion
 
         private void InitCommands()
         {
-            ConfirmCommand = new Command<object>(Confirm);
+            ConfirmCommand = new AsyncCommand<object>(Confirm);
 
             CancelCommand = new Command<object>(Cancel);
         }
 
-        private void Confirm(object o)
+        private async Task GetNationalities()
+        {
+            Nationalities = await m_crudManager.GetNationalities();
+        }
+
+        private async Task Confirm(object o)
         {
             if (!ValidateConfirm()) return;
 
             if (!ValidateAges()) return;
 
-            string bookingReference = m_crudManager.CreateBooking(SelectedFlight.FlightId, SelectedTicketType.TravelClassCode, SelectedTicketType.Amount, PassengerInfo);
+            UiState = UiState.Wait;
+
+            string bookingReference = await m_crudManager.CreateBooking(SelectedFlight.FlightId, SelectedTicketType.TravelClassCode, SelectedTicketType.Amount, PassengerInfo);
+
+            UiState = UiState.Normal;
 
             MessageBox.Show($"Your booking was successful. Your booking reference is {bookingReference}.", "Success");
 
@@ -181,6 +250,11 @@ namespace RightFlight
         private int CalculateAge(DateTime dateOfBirth)
         {
             return (int)Math.Floor((SelectedFlight.DepartureTime.Date - dateOfBirth).TotalDays / 365.25);
+        }
+
+        private void NotifyOfPropertyChanged([CallerMemberName] string callerName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
         }
     }
 }

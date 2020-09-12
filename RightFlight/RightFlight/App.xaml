@@ -8,6 +8,8 @@
 
         <local:HalveConverter x:Key="Halve"/>
 
+        <local:UiStateToCursorConvertor x:Key="UiStateToCursor"/>
+
         <Style TargetType="ScrollBar">
 
             <Style.Resources>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using RightFlightBusinessLayer;
 using RightFlightEntityModel;
@@ -11,6 +12,8 @@ namespace RightFlight
     public class AddFlightViewModel : INotifyPropertyChanged
     {
         #region Private Backing Fields
+
+        private UiState m_uiState;
 
         private AirlineInfo m_selectedAirline;
 
@@ -45,10 +48,12 @@ namespace RightFlight
 
             SelectedDate = DateTime.Today;
 
+            UiState = UiState.Normal;
+
             InitCommands();
         }
 
-        public Command<object> ConfirmCommand { get; set; }
+        public AsyncCommand<object> ConfirmCommand { get; set; }
 
         public Command<object> CancelCommand { get; set; }
 
@@ -118,6 +123,20 @@ namespace RightFlight
 
         #region INPC Properties
 
+        public UiState UiState
+        {
+            get { return m_uiState; }
+
+            set
+            {
+                if (m_uiState != value)
+                {
+                    m_uiState = value;
+                    NotifyOfPropertyChanged();
+                }
+            }
+        }
+
         public List<AirlineInfo> AirlineSearchResult
         {
             get { return m_airlineSearchResult; }
@@ -178,50 +197,54 @@ namespace RightFlight
 
         private void InitCommands()
         {
-            ConfirmCommand = new Command<object>(Confirm);
+            ConfirmCommand = new AsyncCommand<object>(Confirm);
 
             CancelCommand = new Command<object>(Cancel);
         }
 
-        public void AirlineSearch()
+        public async Task AirlineSearch()
         {
             if (AirlineSearchText.Trim().Length < 3) return;
 
-            AirlineSearchResult = m_crudManager.AirlineSearch(AirlineSearchText.Trim());
+            AirlineSearchResult = await m_crudManager.AirlineSearch(AirlineSearchText.Trim());
         }
 
-        public void AirportSearch()
+        public async Task AirportSearch()
         {
             if (AirportSearchText.Trim().Length < 3) return;
 
-            AirportSearchResult = m_crudManager.AirportSearch(AirportSearchText.Trim());
+            AirportSearchResult = await m_crudManager.AirportSearch(AirportSearchText.Trim());
         }
 
-        private void RouteSearch()
+        private async Task RouteSearch()
         {
             if (SelectedAirline == null)      
                 RouteSearchResult = new List<RouteInfo>();    
             else if (SelectedAirport == null)
-                RouteSearchResult = m_crudManager.GetRoutes(SelectedAirline.IataAirlineCode);
+                RouteSearchResult = await m_crudManager.GetRoutes(SelectedAirline.IataAirlineCode);
             else
-                RouteSearchResult = m_crudManager.GetRoutes(SelectedAirline.IataAirlineCode, SelectedAirport.IataAirportCode);
+                RouteSearchResult = await m_crudManager.GetRoutes(SelectedAirline.IataAirlineCode, SelectedAirport.IataAirportCode);
         }
 
-        private void RouteAircraftSearch()
+        private async Task RouteAircraftSearch()
         {
             if (SelectedRoute == null)
                 RouteAircraftSearchResult = new List<RouteAircraftInfo>();
             else
-                RouteAircraftSearchResult = m_crudManager.GetRouteAircraftInfoByRouteId(SelectedRoute.RouteId);
+                RouteAircraftSearchResult = await m_crudManager.GetRouteAircraftInfoByRouteId(SelectedRoute.RouteId);
         }
 
-        private void Confirm(object o)
+        private async Task Confirm(object o)
         {
             if (!ValidateConfirm()) return;
 
             DateTime scheduledDeparture = SelectedDate.AddHours(DepartureTimeHours.Value).AddMinutes(DepartureTimeMinutes.Value);
 
-            m_crudManager.AddFlight(SelectedRouteAircraft.RouteAircraftId, FlightNumber, scheduledDeparture);
+            UiState = UiState.Wait;
+
+            await m_crudManager.AddFlight(SelectedRouteAircraft.RouteAircraftId, FlightNumber, scheduledDeparture);
+
+            UiState = UiState.Normal;
 
             MessageBoxResult result = MessageBox.Show("Flight added successfully. Add another?", "Success", MessageBoxButton.YesNo);
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace RightFlight
@@ -10,6 +11,8 @@ namespace RightFlight
     public class FlightSearchViewModel : INotifyPropertyChanged
     {
         #region Private backing fields
+
+        private UiState m_uiState;
 
         private List<CityInfo> m_originCitySearchResult;
 
@@ -39,7 +42,7 @@ namespace RightFlight
 
         public Command<object> HomeCommand { get; set; }
 
-        public Command<object> FlightSearchCommand { get; set; }
+        public AsyncCommand<object> FlightSearchCommand { get; set; }
 
         public Command<FlightInfo> BookCommand { get; set; }
 
@@ -63,6 +66,20 @@ namespace RightFlight
 
         #region INPC Properties
 
+        public UiState UiState
+        {
+            get { return m_uiState; }
+
+            set
+            {
+                if (m_uiState != value)
+                {
+                    m_uiState = value;
+                    NotifyOfPropertyChanged();
+                }
+            }
+        }
+
         public List<CityInfo> OriginCitySearchResult
         {
             get { return m_originCitySearchResult; }
@@ -72,7 +89,7 @@ namespace RightFlight
                 if (m_originCitySearchResult != value)
                 {
                     m_originCitySearchResult = value;
-                    NotifyOfPropertChanged();
+                    NotifyOfPropertyChanged();
                 }
             }
         }
@@ -86,7 +103,7 @@ namespace RightFlight
                 if (m_destinationCitySearchResult != value)
                 {
                     m_destinationCitySearchResult = value;
-                    NotifyOfPropertChanged();
+                    NotifyOfPropertyChanged();
                 }
             }
         }
@@ -100,7 +117,7 @@ namespace RightFlight
                 if (m_flightSearchResult != value)
                 {
                     m_flightSearchResult = value;
-                    NotifyOfPropertChanged();
+                    NotifyOfPropertyChanged();
                 }
             }
         }
@@ -109,7 +126,7 @@ namespace RightFlight
 
         private void InitCommands()
         {
-            FlightSearchCommand = new Command<object>(FlightSearch);
+            FlightSearchCommand = new AsyncCommand<object>(FlightSearch);
             BookCommand = new Command<FlightInfo>(Book);
             HomeCommand = new Command<object>(Home);
         }
@@ -119,25 +136,29 @@ namespace RightFlight
             m_pageController.Home();
         }
 
-        public void OriginCitySearch()
+        public async Task OriginCitySearch()
         {
             if (OriginCitySearchText.Trim().Length < 3) return;
 
-            OriginCitySearchResult = m_crudManager.CitySearch(OriginCitySearchText.Trim());
+            OriginCitySearchResult = await m_crudManager.CitySearch(OriginCitySearchText.Trim());
         }
 
-        public void DestinationCitySearch()
+        public async Task DestinationCitySearch()
         {
             if (DestinationCitySearchText.Trim().Length < 3) return;
 
-            DestinationCitySearchResult = m_crudManager.CitySearch(DestinationCitySearchText.Trim());
+            DestinationCitySearchResult = await m_crudManager.CitySearch(DestinationCitySearchText.Trim());
         }
 
-        private void FlightSearch(object o)
+        private async Task FlightSearch(object o)
         {
             if (!ValidateFlightSearch()) return;
 
-            FlightSearchResult = m_crudManager.FlightSearch(SelectedOriginCity.IataCityCode, SelectedDestinationCity.IataCityCode, Adults, Children, Infants);
+            UiState = UiState.Wait;
+
+            FlightSearchResult = await m_crudManager.FlightSearch(SelectedOriginCity.IataCityCode, SelectedDestinationCity.IataCityCode, Adults, Children, Infants);
+
+            UiState = UiState.Normal;
         }
 
         private void Book(FlightInfo flightSearchResult)
@@ -168,7 +189,7 @@ namespace RightFlight
             return true;
         }
 
-        private void NotifyOfPropertChanged([CallerMemberName] string callerName = "")
+        private void NotifyOfPropertyChanged([CallerMemberName] string callerName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
         }

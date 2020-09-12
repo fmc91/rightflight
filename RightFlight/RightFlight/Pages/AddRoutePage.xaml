@@ -9,7 +9,8 @@
       Title="Add Route"
       WindowTitle="RightFlight - Add Route"
       ShowsNavigationUI="False"
-      Background="{StaticResource AircraftWingBrush}">
+      Background="{StaticResource AircraftWingBrush}"
+      Cursor="{Binding UiState, Converter={StaticResource UiStateToCursor}}">
 
     <Page.Resources>
 

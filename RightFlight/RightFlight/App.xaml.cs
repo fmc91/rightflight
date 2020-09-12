@@ -5,6 +5,8 @@ using System.Windows.Navigation;
 
 namespace RightFlight
 {
+    public enum UiState { Normal, Wait }
+
     public partial class App : Application
     {
         public void AppStartup(object sender, StartupEventArgs e)

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using RightFlightEntityModel;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace RightFlightBusinessLayer
 {
     public class CrudManager
     {
-        public List<TravelClassInfo> GetTravelClasses()
+        public async Task<List<TravelClassInfo>> GetTravelClasses()
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -20,11 +23,11 @@ namespace RightFlightBusinessLayer
                         Name = tc.Name
                     };
 
-                return query.ToList();
+                return await query.ToListAsync();
             }   
     }
 
-        public List<NationalityInfo> GetNationalities()
+        public async Task<List<NationalityInfo>> GetNationalities()
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -36,11 +39,11 @@ namespace RightFlightBusinessLayer
                         CountryName = n.CountryName
                     };
 
-                return nationalityQuery.ToList();
+                return await nationalityQuery.ToListAsync();
             }
         }
 
-        public List<AirlineInfo> AirlineSearch(string search)
+        public async Task<List<AirlineInfo>> AirlineSearch(string search)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -54,11 +57,11 @@ namespace RightFlightBusinessLayer
                         LogoPath = a.LogoPath
                     };
 
-                return airlineQuery.ToList();
+                return await airlineQuery.ToListAsync();
             }
         }
 
-        public List<AirportInfo> AirportSearch(string search)
+        public async Task<List<AirportInfo>> AirportSearch(string search)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -72,11 +75,11 @@ namespace RightFlightBusinessLayer
                         Name = a.Name
                     };
 
-                return airportQuery.ToList();
+                return await airportQuery.ToListAsync();
             }
         }
 
-        public List<AircraftInfo> AircraftSearch(string search)
+        public async Task<List<AircraftInfo>> AircraftSearch(string search)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -89,11 +92,11 @@ namespace RightFlightBusinessLayer
                         Model = a.Model
                     };
 
-                return aircraftQuery.ToList();
+                return await aircraftQuery.ToListAsync();
             }
         }
 
-        public List<CityInfo> CitySearch(string search)
+        public async Task<List<CityInfo>> CitySearch(string search)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -108,11 +111,11 @@ namespace RightFlightBusinessLayer
                         Country = co.Name
                     };
 
-                return cityQuery.ToList();
+                return await cityQuery.ToListAsync();
             }
         }
 
-        public List<FlightInfo> FlightSearch(string originCityCode, string destinationCityCode, int adults, int children, int infants)
+        public async Task<List<FlightInfo>> FlightSearch(string originCityCode, string destinationCityCode, int adults, int children, int infants)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -153,11 +156,11 @@ namespace RightFlightBusinessLayer
                         AircraftType = ac.Model                        
                     };
 
-                return query.ToList();
+                return await query.ToListAsync();
             }
         }
 
-        public void AddRoute(string iataAirlineCode, string originAirportCode, string destinationAirportCode,
+        public async Task AddRoute(string iataAirlineCode, string originAirportCode, string destinationAirportCode,
                              List<FlightDuration> flightDurations, List<ClassPricingScheme> pricingSchemes)
         {
             if (DoesRouteExist(iataAirlineCode, originAirportCode, destinationAirportCode))
@@ -174,7 +177,7 @@ namespace RightFlightBusinessLayer
                 };
 
                 db.Route.Add(route);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 foreach (FlightDuration fd in flightDurations)
                 {
@@ -188,11 +191,11 @@ namespace RightFlightBusinessLayer
                     db.RouteAircraft.Add(aircraftRoute);
                 }
 
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
-        public void AddFlight(int routeAircraftId, string flightNumber, DateTime scheduledDeparture)
+        public async Task AddFlight(int routeAircraftId, string flightNumber, DateTime scheduledDeparture)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -204,11 +207,11 @@ namespace RightFlightBusinessLayer
                 };
 
                 db.Flight.Add(flight);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
-        public List<RouteInfo> GetRoutes(string iataAirlineCode, string iataAirportCode)
+        public async Task<List<RouteInfo>> GetRoutes(string iataAirlineCode, string iataAirportCode)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -231,11 +234,11 @@ namespace RightFlightBusinessLayer
                         DestinationAirport = ds.Name
                     };
 
-                return routeQuery.ToList();
+                return await routeQuery.ToListAsync();
             }
         }
 
-        public List<RouteInfo> GetRoutes(string iataAirlineCode)
+        public async Task<List<RouteInfo>> GetRoutes(string iataAirlineCode)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -256,11 +259,11 @@ namespace RightFlightBusinessLayer
                         DestinationAirport = ds.Name
                     };
 
-                return routeQuery.ToList();
+                return await routeQuery.ToListAsync();
             }
         }
 
-        public List<RouteAircraftInfo> GetRouteAircraftInfoByRouteId(int routeId)
+        public async Task<List<RouteAircraftInfo>> GetRouteAircraftInfoByRouteId(int routeId)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -276,9 +279,8 @@ namespace RightFlightBusinessLayer
                         FlightDuration = ra.FlightDuration
                     };
 
-                return aircraftRouteQuery.ToList();
+                return await aircraftRouteQuery.ToListAsync();
             }
-
         }
 
         private bool DoesRouteExist(string iataAirlineCode, string originAirportCode, string destinationAirportCode)
@@ -299,7 +301,7 @@ namespace RightFlightBusinessLayer
             }
         }
 
-        public string CreateBooking(int flightId, string travelClassCode, float amount, List<PassengerInfo> passengers)
+        public async Task<string> CreateBooking(int flightId, string travelClassCode, float amount, List<PassengerInfo> passengers)
         {
             using (FlightReservationContext db = new FlightReservationContext())
             {
@@ -333,7 +335,7 @@ namespace RightFlightBusinessLayer
                     db.Passenger.Add(passenger);
                 }
 
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 return booking.BookingReference;
             }

@@ -10,7 +10,8 @@
       Title="Book Flight"
       WindowTitle="RightFlight - Book Flight"
       ShowsNavigationUI="False"
-      Background="{StaticResource AircraftWingBrush}">
+      Background="{StaticResource AircraftWingBrush}"
+      Cursor="{Binding UiState, Converter={StaticResource UiStateToCursor}}">
 
     <Page.Resources>
         <Style x:Key="PriceStyle" TargetType="TextBlock">

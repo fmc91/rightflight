@@ -7,12 +7,15 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace RightFlight
 {
     public class AddRouteViewModel : INotifyPropertyChanged
     {
         #region Private Backing Fields
+
+        private UiState m_uiState;
 
         private AircraftInfo m_selectedAircraft;
 
@@ -27,6 +30,8 @@ namespace RightFlight
         private float? m_infantFare;
 
         private TravelClassInfo m_selectedTravelClass;
+
+        private List<TravelClassInfo> m_travelClasses;
 
         private List<AirlineInfo> m_airlineSearchResult;
 
@@ -57,9 +62,13 @@ namespace RightFlight
             FlightDurations = new ObservableCollection<FlightDuration>();
             ClassPricingSchemes = new ObservableCollection<ClassPricingScheme>();
 
-            TravelClasses = new ObservableCollection<TravelClassInfo>(m_crudManager.GetTravelClasses());
+            TravelClasses = new List<TravelClassInfo>();
+
+            UiState = UiState.Normal;
 
             InitCommands();
+
+            GetTravelClasses();
         }
 
         #region Commands
@@ -72,7 +81,7 @@ namespace RightFlight
 
         public Command<ClassPricingScheme> RemovePricingSchemeCommand { get; set; }
 
-        public Command<object> ConfirmCommand { get; set; }
+        public AsyncCommand<object> ConfirmCommand { get; set; }
 
         public Command<object> CancelCommand { get; set; }
 
@@ -92,9 +101,7 @@ namespace RightFlight
 
         public AirportInfo SelectedOrigin { get; set; }
 
-        public AirportInfo SelectedDestination { get; set; }
-
-        public ObservableCollection<TravelClassInfo> TravelClasses { get; set; }
+        public AirportInfo SelectedDestination { get; set; }        
 
         public ObservableCollection<FlightDuration> FlightDurations { get; set; }
 
@@ -103,6 +110,20 @@ namespace RightFlight
         #endregion
 
         #region INPC Properties
+
+        public UiState UiState
+        {
+            get { return m_uiState; }
+
+            set
+            {
+                if (m_uiState != value)
+                {
+                    m_uiState = value;
+                    NotifyOfPropertyChanged();
+                }
+            }
+        }
 
         public AircraftInfo SelectedAircraft
         {
@@ -188,6 +209,20 @@ namespace RightFlight
             }
         }
 
+        public List<TravelClassInfo> TravelClasses
+        {
+            get { return m_travelClasses; }
+
+            set
+            {
+                if (m_travelClasses != value)
+                {
+                    m_travelClasses = value;
+                    NotifyOfPropertyChanged();
+                }
+            }
+        }
+
         public List<AirlineInfo> AirlineSearchResult
         {
             get { return m_airlineSearchResult; }
@@ -266,36 +301,41 @@ namespace RightFlight
             AddPricingSchemeCommand = new Command<object>(AddPricingScheme);
             RemoveFlightDurationCommand = new Command<FlightDuration>(RemoveFlightDuration);
             RemovePricingSchemeCommand = new Command<ClassPricingScheme>(RemovePricingScheme);
-            ConfirmCommand = new Command<object>(Confirm);
+            ConfirmCommand = new AsyncCommand<object>(Confirm);
             CancelCommand = new Command<object>(Cancel);
         }
 
-        public void OriginSearch()
+        private async Task GetTravelClasses()
+        {
+            TravelClasses = new List<TravelClassInfo>(await m_crudManager.GetTravelClasses());
+        }
+
+        public async Task OriginSearch()
         {
             if (OriginSearchText.Length < 3) return;
 
-            OriginSearchResult = m_crudManager.AirportSearch(OriginSearchText);
+            OriginSearchResult = await m_crudManager.AirportSearch(OriginSearchText);
         }
 
-        public void AirlineSearch()
+        public async Task AirlineSearch()
         {
             if (AirlineSearchText.Length < 3) return;
 
-            AirlineSearchResult = m_crudManager.AirlineSearch(AirlineSearchText);
+            AirlineSearchResult = await m_crudManager.AirlineSearch(AirlineSearchText);
         }
 
-        public void DestinationSearch()
+        public async Task DestinationSearch()
         {
             if (DestinationSearchText.Length < 3) return;
 
-            DestinationSearchResult = m_crudManager.AirportSearch(DestinationSearchText);
+            DestinationSearchResult = await m_crudManager.AirportSearch(DestinationSearchText);
         }
 
-        public void AircraftSearch()
+        public async Task AircraftSearch()
         {
             if (AircraftSearchText.Length < 3) return;
 
-            AircraftSearchResult = m_crudManager.AircraftSearch(AircraftSearchText);
+            AircraftSearchResult = await m_crudManager.AircraftSearch(AircraftSearchText);
         }
 
         public void AddFlightDuration(object o)
@@ -347,14 +387,18 @@ namespace RightFlight
             ClassPricingSchemes.Remove(pricingScheme);
         }
 
-        public void Confirm(object o)
+        public async Task Confirm(object o)
         {
             if (!ValidateConfirm()) return;
 
             try
             {
-                m_crudManager.AddRoute(SelectedAirline.IataAirlineCode, SelectedOrigin.IataAirportCode, SelectedDestination.IataAirportCode,
+                UiState = UiState.Wait;
+
+                await m_crudManager.AddRoute(SelectedAirline.IataAirlineCode, SelectedOrigin.IataAirportCode, SelectedDestination.IataAirportCode,
                                        FlightDurations.ToList(), ClassPricingSchemes.ToList());
+
+                UiState = UiState.Normal;
 
                 MessageBoxResult result = MessageBox.Show("Route added successfully. Add another?", "Success", MessageBoxButton.YesNo);
 

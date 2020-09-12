@@ -10,7 +10,8 @@
       Title="Flight Search"
       WindowTitle="RightFlight - Search for Flights"
       ShowsNavigationUI="False"
-      Background="{StaticResource AircraftWingBrush}">
+      Background="{StaticResource AircraftWingBrush}"
+      Cursor="{Binding UiState, Converter={StaticResource UiStateToCursor}}">
 
     <Page.Resources>
 
