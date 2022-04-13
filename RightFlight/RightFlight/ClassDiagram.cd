@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RightFlight.PageController">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAgAAACQAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>PageController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RightFlight.HomePage" Collapsed="true">
+    <Position X="3" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\HomePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RightFlight.FlightSearchPage" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Pages\FlightSearchPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RightFlight.BookFlightPage" Collapsed="true">
+    <Position X="8" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\BookFlightPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RightFlight.AddRoutePage" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAABAAAAAAAAAAAAAACAAAgAAAAAAAAA=</HashCode>
+      <FileName>Pages\AddRoutePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RightFlight.AddFlightPage" Collapsed="true">
+    <Position X="13" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Pages\AddFlightPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RightFlight.HomeViewModel">
+    <Position X="3" Y="1.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAQAACQAAAgAAABAAAAAABAAAAAAQAAA=</HashCode>
+      <FileName>ViewModels\HomeViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="m_pageController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RightFlight.FlightSearchViewModel">
+    <Position X="5.5" Y="1.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="m_pageController" Type="RightFlight.PageController">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-3.898" Y="0.51" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ABGAAAQAAAEYACBAAQAHAIABghQAAACBAJACAAIAABA=</HashCode>
+      <FileName>ViewModels\FlightSearchViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="m_pageController" />
+      <Field Name="m_crudManager" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RightFlight.BookFlightViewModel">
+    <Position X="8" Y="1.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="m_pageController" Type="RightFlight.PageController">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-6.365" Y="0.727" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>YACAAAQAQAgYAAAAARAGAIACgBAAgAAEAIDCIAIAAAA=</HashCode>
+      <FileName>ViewModels\BookFlightViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="m_crudManager" />
+      <Field Name="m_pageController" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RightFlight.AddRouteViewModel">
+    <Position X="10.5" Y="1.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="m_pageController" Type="RightFlight.PageController">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.632" Y="1.11" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ciQABCQCSAgcQAASAQymAQIBkRAIUIDFEIQAkAVAACA=</HashCode>
+      <FileName>ViewModels\AddRouteViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="m_pageController" />
+      <Field Name="m_crudManager" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RightFlight.AddFlightViewModel">
+    <Position X="13" Y="1.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="m_pageController" Type="RightFlight.PageController">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.407" Y="0.61" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>YAAIAAwoQAgYhAAAgQQCAACAgTIwAQiBAIQAIIBEASA=</HashCode>
+      <FileName>ViewModels\AddFlightViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="m_pageController" />
+      <Field Name="m_crudManager" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RightFlightBusinessLayer.CrudManager">
+    <Position X="5.5" Y="4.75" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
